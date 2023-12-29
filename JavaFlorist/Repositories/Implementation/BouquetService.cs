@@ -73,18 +73,18 @@ namespace JavaFlorist.Repositories.Implementation
             return relatedBouquets;
         }
 
-        public List<Bouquet_Info> GetTopFiveDistinctCategoriesBySoldCount()
+        public List<HomeModel> GetTopDistinctCategoriesBySoldCount()
         {
             var topFiveCategories = ctx.Bouquet_Info
-    .GroupBy(b => b.category)
-    .Select(g => new
-    {
-        Category = g.Key,
-        TotalSoldCount = g.Sum(b => b.sold)
-    })
-    .OrderByDescending(g => g.TotalSoldCount)
-    .Take(5)
-    .ToList();
+            .GroupBy(b => b.category)
+            .Select(g => new
+            {
+                 Category = g.Key,
+                 TotalSoldCount = g.Sum(b => b.sold)
+            })
+            .OrderByDescending(g => g.TotalSoldCount)
+            .Take(5)
+            .ToList();
 
             var topFiveCategoriesNames = topFiveCategories.Select(c => c.Category).ToList();
 
@@ -94,15 +94,26 @@ namespace JavaFlorist.Repositories.Implementation
                 .Select(group => group.OrderByDescending(b => b.sold).FirstOrDefault())
                 .ToList();
 
+            // Fetching IDs of already selected products
+            var topProductIds = topFiveProducts.Select(tp => tp.bouquet_id).ToList();
+
             // Fetching additional products beyond the top categories
-            var remainingProducts = ctx.Bouquet_Info
-                .Where(b => !topFiveProducts.Any(tp => tp.bouquet_id == b.bouquet_id)) // Exclude products already selected
+            var topProducts = ctx.Bouquet_Info
+                .Where(b => !topProductIds.Contains(b.bouquet_id))
                 .OrderByDescending(b => b.sold)
-                .Take(8 - topFiveProducts.Count) // Select the remaining count to reach top 8
+                .Take(13 - topFiveProducts.Count)
                 .ToList();
 
 
-            return topFiveProducts;
+            var data = new HomeModel
+            {
+                topFiveProducts = topFiveProducts,
+                topProducts = topProducts
+            };
+
+            var dataList = new List<HomeModel>();
+            dataList.Add(data);
+            return dataList;
 
 
         }

@@ -17,7 +17,7 @@ namespace JavaFlorist.Repositories.Abstract
         List<Bouquet_Info> GetRelatedBouquets(int bouquet_id);
         List<Bouquet_Info> GetByCategory(string category);
 
-		List<Bouquet_Info> GetTopFiveDistinctCategoriesBySoldCount();
+		List<HomeModel> GetTopDistinctCategoriesBySoldCount();
 
 	}
 }

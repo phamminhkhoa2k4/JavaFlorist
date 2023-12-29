@@ -900,6 +900,27 @@
             });
         }
 
+
+
+
+        $('.quantity').on('input', function () {
+            var bouquetId = $(this).attr('id').split('_')[1]; // Lấy id của sản phẩm từ id của input
+            var quantity = $(this).val(); // Lấy giá trị số lượng từ input
+
+            $.ajax({
+                url: '/Cart/UpdateCartItemQuantity', // Endpoint cập nhật số lượng
+                method: 'POST',
+                data: { bouquetId: bouquetId, newQuantity: quantity },
+                success: function (response) {
+                    // Xử lý kết quả từ server nếu cần
+                },
+                error: function (error) {
+                    // Xử lý lỗi nếu có
+                }
+            });
+        });
+
+
     </script>
     <script src="~/js/main.js"></script>
 </body>

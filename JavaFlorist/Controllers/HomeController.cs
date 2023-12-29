@@ -13,7 +13,7 @@ namespace JavaFlorist.Controllers
         // Home Page
         public IActionResult Index()
         {
-            var data = _bouquetService.GetTopFiveDistinctCategoriesBySoldCount();
+            var data = _bouquetService.GetTopDistinctCategoriesBySoldCount();
             return View(data);
         }
 
