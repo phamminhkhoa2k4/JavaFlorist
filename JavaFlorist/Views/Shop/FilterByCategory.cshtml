@@ -1,0 +1,83 @@
+﻿@using JavaFlorist.Models.Domain;
+@using Microsoft.AspNetCore.Identity;
+@inject UserManager<ApplicationUser> UserManager
+@{
+    ViewBag.Title = "Shop";
+    ViewBag.Index = 2;
+    int? id = 0;
+    string username = User.Identity.Name;
+    if (!string.IsNullOrEmpty(username))
+    {
+        var user = await UserManager.FindByNameAsync(username);
+        if (user != null)
+            id = user.cust_id;
+
+    }
+}
+
+
+<div class="hero-wrap hero-bread" style="background-image: url(' ');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Products</span></p>
+                <h1 class="mb-0 bread">Products</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="ftco-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-10 mb-5 text-center">
+                <ul class="product-category">
+                    <li><a href="/Shop/Shop" class="active">All</a></li>
+                    <li><a href="/Shop/FilterByCategory?category=Birthday">Birthday</a></li>
+                    <li><a href="/Shop/FilterByCategory?category=Wedding">Wedding</a></li>
+                    <li><a href="/Shop/FilterByCategory?category=New Baby">New Baby</a></li>
+                    <li><a href="/Shop/FilterByCategory?category=Thank You">Thank You</a></li>
+                    <li><a href="/Shop/FilterByCategory?category=Father Day">Father Day</a></li>
+                    <li><a href="/Shop/FilterByCategory?category=Mother Day">Mother Day</a></li>
+                    <li><a href="/Shop/FilterByCategory?category=Lover">Lover</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            @foreach (var bouquet in Model.BouquetList)
+            {
+                <div class="col-md-6 col-lg-3 ftco-animate">
+                    <div class="product">
+                        <a href="/Shop/ShopDetail?bouquet_id=@bouquet.bouquet_id" class="img-prod">
+                            <img class="img-fluid" src="/Uploads/@bouquet.bouquetImage">
+                            <span class="status">3%</span>
+                            <div class="overlay"></div>
+                        </a>
+                        <div class="text py-3 pb-4 px-3 text-center">
+                            <h3><a href="#">@bouquet.name</a></h3>
+                            <div class="d-flex">
+                                <div class="pricing">
+                                    <p class="price"><span class="mr-2 price-dc">$120.00</span><span class="price-sale">$@bouquet.price</span></p>
+                                </div>
+                            </div>
+                            <div class="bottom-area d-flex px-3">
+                                <div class="m-auto d-flex">
+                                    <a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                        <span><i class="ion-ios-menu"></i></span>
+                                    </a>
+                                    <a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                        <span><i class="ion-ios-cart"></i></span>
+                                    </a>
+                                    <a href="/Wishlist/Add?cust_id=@id&bouquet_id=@bouquet.bouquet_id" class="heart d-flex justify-content-center align-items-center ">
+                                        <span><i class="ion-ios-heart"></i></span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

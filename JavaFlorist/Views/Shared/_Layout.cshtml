@@ -1,0 +1,906 @@
+﻿@using JavaFlorist.Models.Domain;
+@using Microsoft.AspNetCore.Identity
+
+
+     
+
+
+@inject UserManager<ApplicationUser> UserManager
+@{
+ 
+    string username = User.Identity.Name;
+    string avatar = "";
+    int? id = 0;
+    string email = "";
+    string firstName = "";
+    string lastname = "";
+    int? phone = 0;
+    string gender = "";
+    string UserId = "";
+    DateTime? birth = DateTime.Now;
+    string address = "";
+    if (!string.IsNullOrEmpty(username))
+    {
+        var serviceProvider = ViewContext.HttpContext.RequestServices;
+        // Truy cập đến đối tượng DbContext từ dịch vụ (Service) hoặc Dependency Injection (DI)
+        var dbContext = serviceProvider.GetRequiredService<DatabaseContext>();
+        var user = await UserManager.FindByNameAsync(username);
+        avatar = user?.ProfilePicture ?? "";
+        id = user?.cust_id;
+        UserId = user?.Id;
+        email = user?.Email;
+        if (user != null)
+        {
+            dbContext.Entry(user).Reference(u => u.Customer).Load();
+
+
+            if (user.Customer != null)
+            {
+                    firstName = user.Customer.F_name;
+                    lastname = user.Customer.L_name;
+                    phone = user.Customer.P_no;
+                    gender = user.Customer.Gender;
+                    birth = user.Customer.Dob;
+                    address = user.Customer.Address;
+            }
+        }
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title> Java Florist | @ViewBag.Title </title>
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/~/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/JavaFlorist.styles.css" asp-append-version="true" />
+
+
+    <link rel="stylesheet" href="~/~/css/open-iconic-bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/animate.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/owl.carousel.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/owl.theme.default.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/magnific-popup.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/aos.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/ionicons.min.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/bootstrap-datepicker.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/jquery.timepicker.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="~/css/flaticon.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/icomoon.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+</head>
+<body >
+
+    <!--  Begin Navigation -->
+
+    <header class="site-navbar" role="banner">
+        <div class="site-navbar-top">
+            <div class="container">
+                <div class="row align-items-center">
+
+                    <div class="col-6 col-md-4 order-2 order-md-1 site-search-icon text-left">
+                        <div class="site-logo">
+                            <a href="/Home/Index" class="js-logo-clone">Java Florist</a>
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3 mb-md-0 col-md-4 order-1 order-md-2 text-center">
+                        <form action="" class="site-block-top-search col-12 mb-3 mb-md-0 " style="border: 1px solid #000;display:flex;border-radius: 50px;position:relative;" autocomplete="off">
+                            <input type="text" id="searchInput" class="form-control border-0" placeholder="Search" style="border-radius: 50px;height:40px !important">
+                            <span class="icon icon-search2" style="display:flex;align-items:center"></span>
+                        </form>
+                        <ul id="suggestions" class="list-group list-unstyled list-group-numbered" style="position:absolute;width:600px;left:-110px;z-index:10000"></ul>
+                    </div>
+
+                    <div class="col-6 col-md-4 order-3 order-md-3 text-right">
+                        <div class="site-top-icons">
+                            <ul>
+
+                                @if (string.IsNullOrEmpty(username))
+                                {
+                                    <li><a href="/UserAuthentication/Login"><span class="icon icon-person"></span></a></li>
+                                }
+                                @if (!string.IsNullOrEmpty(username))
+                                {
+                                    <li>
+                                        @{
+                                            if (avatar == "")
+                                            {
+                                                <img id="menu-icon" src="/img/Avatar-Default.jpg" style="margin-right:10px;;margin-top:-10px;height:25px;width:25px;border-radius:50%;border:2px solid #aaa">
+                                            }
+                                            else
+                                            {
+                                                <img id="menu-icon" src="/Uploads/@avatar" style="margin-right:10px;;margin-top:-10px;height:25px;width:25px;border-radius:50%;border:2px solid #aaa">
+                                            }
+                                        }
+                                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" style="left:258px;top:251%;" aria-labelledby="drop2">
+                                            <div class="message-body">
+                                                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                                                    <i class="ti ti-user fs-6"></i>
+                                                    <p class="mb-0 fs-3">@username</p>
+                                                </a>
+                                                <a href="javascript:void(0)" class="d-flex align-items-center gap-2 dropdown-item">
+                                                    <i class="ti ti-list-check fs-6"></i>
+                                                    <p class="mb-0 fs-3" data-toggle="modal" data-target="#myModal">My Profile</p>
+                                                </a>
+                                                @{
+                                                    if (User.IsInRole("Admin"))
+                                                    {
+                                                        <a href="/Admin/Administration/Index" class="d-flex align-items-center gap-2 dropdown-item">
+                                                            <i class="ti ti-mail fs-6"></i>
+                                                            <p class="mb-0 fs-3">Dashboard</p>
+                                                        </a>
+                                                    }
+                                                }
+                                                <a href="/UserAuthentication/Logout" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                }
+
+                                <li><a href="/Wishlist/Wishlist?id=@id"><span class="icon icon-heart-o"></span></a></li>
+                                <li>
+                                    <a href="/Cart/Cart" class="site-cart">
+                                        <span class="icon icon-shopping_cart"></span>
+                                        <span class="count">2</span>
+                                    </a>
+                                </li>
+                                <li class="d-inline-block d-md-none ml-md-0"><a href="#" class="site-menu-toggle js-menu-toggle"><span class="icon-menu"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <nav class="site-navigation text-right text-md-center" role="navigation">
+            <div class="container">
+                <ul class="site-menu js-clone-nav d-none d-md-block">
+                    <li class="has-children @(ViewBag.Index == 1 ? "active" : "")">
+                        <a href="/Home/Index">Home</a>
+                        <ul class="dropdown">
+                            <li><a href="/UserAuthentication/UpdateProfile?id=@username">Menu Two</a></li>
+                            <li><a href="#">Menu Three</a></li>
+                            <li class="has-children">
+                                <a href="#">Sub Menu</a>
+                                <ul class="dropdown">
+                                    <li><a href="#">Menu One</a></li>
+                                    <li><a href="#">Menu Two</a></li>
+                                    <li><a href="#">Menu Three</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="has-children  @(ViewBag.Index == 2 ? "active" : "")">
+                        <a href="/Shop/Shop">Shop</a>
+                        <ul class="dropdown">
+                            <li><a href="/Shop/FilterByCategory?category=Birthday">Birthday</a></li>
+                            <li><a href="/Shop/FilterByCategory?category=Wedding">Wedding</a></li>
+                            <li><a href="/Shop/FilterByCategory?category=New baby">New baby</a></li>
+                            <li><a href="/Shop/FilterByCategory?category=Thank you">Thank you</a></li>
+                            <li><a href="/Shop/FilterByCategory?category=Father day">Father day</a></li>
+                            <li><a href="/Shop/FilterByCategory?category=Mother day">Mother day</a></li>
+                            <li><a href="/Shop/FilterByCategory?category=Lover">Lover</a></li>
+                        </ul>
+                    </li>
+                    <li class=" @(ViewBag.Index == 3 ? "active" : "")"><a href="/Home/About">About</a></li>
+                    <li class=" @(ViewBag.Index == 4 ? "active" : "")"><a href="/Blog/Blog">Blog</a></li>
+                    <li class=" @(ViewBag.Index == 5 ? "active" : "")"><a href="/Contact/Contact">Contact</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!--  End Navigation -->
+    @{
+        if (ViewBag.Title == "Home")
+        {
+            <!--  Begin Slider -->
+            <section id="home-section" class="hero">
+                <div class="home-slider owl-carousel">
+                    <div class="slider-item" style="background-image: url(/img/1.png)">
+                        <div class="overlay"></div>
+                        <div class="container">
+                            <div class="row slider-text justify-content-center align-items-center"
+                                 data-scrollax-parent="true">
+                                <div class="col-md-12 ftco-animate text-center">
+                                    <h1 class="mb-2">Fresh Flowers Send Messages of Love</h1>
+                                    <h2 class="subheading mb-4">
+                                        We deliver to your door
+                                    </h2>
+                                    <p><a href="#" class="btn btn-primary">View Details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slider-item" style="background-image: url(/img/1.png)">
+                        <div class="overlay"></div>
+                        <div class="container">
+                            <div class="row slider-text justify-content-center align-items-center"
+                                 data-scrollax-parent="true">
+                                <div class="col-sm-12 ftco-animate text-center">
+                                    <h1 class="mb-2">Fresh Flowers Send Messages of Love</h1>
+                                    <h2 class="subheading mb-4">
+                                        We deliver to your door
+                                    </h2>
+                                    <p><a href="/Shop/Shop" class="btn btn-primary">View Details</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--  End Slider -->
+        }
+    }
+
+    <div>
+        @RenderBody()
+    </div>
+    @{
+        if (ViewBag.Title == "Home")
+        {
+            <!--  Begin  -->
+            <section class="ftco-section img"
+                     style="background-image: url(/img/2.png)">
+                <div class="container">
+                    <div class="row justify-content-end">
+                        <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
+                            <span class="subheading">Best Price For You</span>
+                            <h2 class="mb-4">Deal of the day</h2>
+                            <p>
+                                Far far away, behind the word mountains, far from the countries
+                                Vokalia and Consonantia
+                            </p>
+                            <h3><a href="#">Spinach</a></h3>
+                            <span class="price">$10 <a href="#">now $5 only</a></span>
+                            <div id="timer" class="d-flex mt-5">
+                                <div class="time" id="days"></div>
+                                <div class="time pl-3" id="hours"></div>
+                                <div class="time pl-3" id="minutes"></div>
+                                <div class="time pl-3" id="seconds"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--  End  -->
+            <!--  Begin  -->
+            <section class="ftco-section testimony-section">
+                <div class="container">
+                    <div class="row justify-content-center mb-5 pb-3">
+                        <div class="col-md-7 heading-section ftco-animate text-center">
+                            <span class="subheading">Testimony</span>
+                            <h2 class="mb-4">Our satisfied customer says</h2>
+                            <p>
+                                Far far away, behind the word mountains, far from the countries
+                                Vokalia and Consonantia, there live the blind texts. Separated
+                                they live in
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row ftco-animate">
+                        <div class="col-md-12">
+                            <div class="carousel-testimony owl-carousel">
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5"
+                                             style="background-image: url(/images/person_1.jpg)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text text-center">
+                                            <p class="mb-5 pl-4 line">
+                                                Far far away, behind the word mountains, far from the
+                                                countries Vokalia and Consonantia, there live the blind
+                                                texts.
+                                            </p>
+                                            <p class="name">Garreth Smith</p>
+                                            <span class="position">Marketing Manager</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5"
+                                             style="background-image: url(/images/person_2.jpg)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text text-center">
+                                            <p class="mb-5 pl-4 line">
+                                                Far far away, behind the word mountains, far from the
+                                                countries Vokalia and Consonantia, there live the blind
+                                                texts.
+                                            </p>
+                                            <p class="name">Garreth Smith</p>
+                                            <span class="position">Interface Designer</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5"
+                                             style="background-image: url(/images/person_3.jpg)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text text-center">
+                                            <p class="mb-5 pl-4 line">
+                                                Far far away, behind the word mountains, far from the
+                                                countries Vokalia and Consonantia, there live the blind
+                                                texts.
+                                            </p>
+                                            <p class="name">Garreth Smith</p>
+                                            <span class="position">UI Designer</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5"
+                                             style="background-image: url(/images/person_1.jpg)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text text-center">
+                                            <p class="mb-5 pl-4 line">
+                                                Far far away, behind the word mountains, far from the
+                                                countries Vokalia and Consonantia, there live the blind
+                                                texts.
+                                            </p>
+                                            <p class="name">Garreth Smith</p>
+                                            <span class="position">Web Developer</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5"
+                                             style="background-image: url(/images/person_1.jpg)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text text-center">
+                                            <p class="mb-5 pl-4 line">
+                                                Far far away, behind the word mountains, far from the
+                                                countries Vokalia and Consonantia, there live the blind
+                                                texts.
+                                            </p>
+                                            <p class="name">Garreth Smith</p>
+                                            <span class="position">System Analyst</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!--  End  -->
+            <hr />
+            <!--  Begin  -->
+            <section class="ftco-section ftco-partner">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm ftco-animate">
+                            <a href="#" class="partner">
+                                <img src="/images/partner-1.png"
+                                     class="img-fluid" />
+                            </a>
+                        </div>
+                        <div class="col-sm ftco-animate">
+                            <a href="#" class="partner">
+                                <img src="/images/partner-2.png"
+                                     class="img-fluid" />
+                            </a>
+                        </div>
+                        <div class="col-sm ftco-animate">
+                            <a href="#" class="partner">
+                                <img src="/images/partner-3.png"
+                                     class="img-fluid" />
+                            </a>
+                        </div>
+                        <div class="col-sm ftco-animate">
+                            <a href="#" class="partner">
+                                <img src="/images/partner-4.png"
+                                     class="img-fluid" />
+                            </a>
+                        </div>
+                        <div class="col-sm ftco-animate">
+                            <a href="#" class="partner">
+                                <img src="/images/partner-5.png"
+                                     class="img-fluid" />
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--  End  -->
+        }
+    }
+
+    @{
+        if (ViewBag.Title != "About")
+        {
+            <!--  Begin  -->
+            <section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
+                <div class="container py-4">
+                    <div class="row d-flex justify-content-center py-5">
+                        <div class="col-md-6">
+                            <h2 style="font-size: 22px" class="mb-0">
+                                Subcribe to our Newsletter
+                            </h2>
+                            <span>
+                                Get e-mail updates about our latest shops and special
+                                offers
+                            </span>
+                        </div>
+                        <div class="col-md-6 d-flex align-items-center">
+                            <form action="#" class="subscribe-form">
+                                <div class="form-group d-flex">
+                                    <input type="text"
+                                           class="form-control"
+                                           placeholder="Enter email address" />
+                                    <input type="submit" value="Subscribe" class="submit px-3" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!--  End  -->
+        }
+    }
+
+
+    <footer class="ftco-footer ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="mouse">
+                    <a href="#" class="mouse-icon">
+                        <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
+                    </a>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Java Florist</h2>
+                        <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
+                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
+                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4 ml-md-5">
+                        <h2 class="ftco-heading-2">Menu</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="/Shop/Shop" class="py-2 d-block">Shop</a></li>
+                            <li><a href="/Home/About" class="py-2 d-block">About</a></li>
+                            <li><a href="/Blog/Blog" class="py-2 d-block">Blog</a></li>
+                            <li><a href="/Contact/Contact" class="py-2 d-block">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Social</h2>
+                        <div class="d-flex">
+                            <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
+                                <li><a href="#" class="py-2 d-block">Facebook</a></li>
+                                <li><a href="#" class="py-2 d-block">Instagram</a></li>
+                                <li><a href="#" class="py-2 d-block">X</a></li>
+                                <li><a href="#" class="py-2 d-block">Titok</a></li>
+                            </ul>
+                            <ul class="list-unstyled">
+                                <li><a href="#" class="py-2 d-block">FAQs</a></li>
+                                <li><a href="#" class="py-2 d-block">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md">
+                    <div class="ftco-footer-widget mb-4">
+                        <h2 class="ftco-heading-2">Contact</h2>
+                        <div class="block-23 mb-3">
+                            <ul>
+                                <li><span class="icon icon-map-marker"></span><span class="text">Số 1 , Lý Tự Trọng , Ninh Kiều , Cần Thơ, Việt Nam </span></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+84 99999 999 99 </span></a></li>
+                                <li><a href="#"><span class="icon icon-envelope"></span>  <span class="text">  pmkhoaa22086@cusc.edu.ctu.vn</span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <p>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="#" target="_blank">Wisdom A.K.A Minh Khoa</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee" /><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00" /></svg></div>
+
+
+    <!-- modal -->
+    <div class="modal fade" id="myModal" role="dialog" style="z-index:10000">
+        <div class="modal-dialog modal-content" style="background-color:none;height:0;border:none">
+
+            <div class="padding">
+                <div class="row container d-flex justify-content-center" style="margin-left:10px">
+                    <div class="">
+                        <form asp-action="UpdateProfile" asp-controller="UserAuthentication" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="Username" value="@username" />
+                            <input type="hidden" name="Email" value="@email" />
+                            <input type="hidden" name="ProfilePicture" value="@avatar" />
+                            <div class="card user-card-full" style="min-width:800px;">
+                                <div class="row m-l-0 m-r-0">
+                                    <div class="col-sm-4 bg-c-lite-green user-profile">
+                                        <div class="card-block text-center text-white">
+                                            <div class="m-b-25">
+                                                @{
+                                                    if (avatar == "")
+                                                    {
+                                                        <img src="/img/Avatar-Default.jpg" id="preview" class="img-radius" alt="User-Profile-Image" style="height:180px;width: 185px">
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <img src="/Uploads/@avatar" id="preview" class="img-radius" alt="User-Profile-Image" style="height:180px;width: 185px">
+                                                    }
+                                                }
+                                            </div>
+                                            <input type="file" class="inputFile" id="fileInput" name="ImageFile" onchange="previewImage(event)" />
+                                            <h6 class="f-w-600">@username</h6>
+                                            <p>@email</p>
+                                            <span id="editIcon"> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i> </span>
+                                            <span class="arrow-back" onclick="removeImage()" id="arrowBack">
+                                                <i class="ion-ios-arrow-back"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div id="add-profile" class="col-sm-8" style="display:none">
+                                        <div class="card-block">
+                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Last Name</p>
+                                                    <input type="text" value="@firstName" name="F_name" class="form-control" style="border: 1px solid #e8e8e8;height:32px !important; margin-bottom:10px;font-size:16px;" required />
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Last Name</p>
+                                                    <input type="text" value="@lastname" name="L_name" class="form-control" style="border: 1px solid #e8e8e8;height:32px !important; margin-bottom:10px;font-size:16px;" required />
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Date of Birth</p>
+                                                    <input type="text" value="@((birth.HasValue ? birth.Value.ToString("MM/dd/yyyy") : string.Empty))" name="Dob" class="form-control" style="border: 1px solid #e8e8e8;height:32px !important; margin-bottom:10px;font-size:16px;" required />
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Gender</p>
+                                                    <select type="text" value="@gender" name="Gender" class="form-control" style="border: 1px solid #e8e8e8;height:32px !important; margin-bottom:10px;font-size:16px;" required>
+                                                        <option value="0">Male</option>
+                                                        <option value="1">Female</option>
+                                                        <option value="2">Orther</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Phone Number</p>
+                                                    <input type="tel" value="@phone" name="P_no" class="form-control" style="border: 1px solid #e8e8e8;height:32px !important;margin-bottom:10px;font-size:16px;" required />
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <p class="m-b-10 f-w-600">Address</p>
+                                                    <input type="text" value="@address" name="Address" class="form-control" style="border: 1px solid #e8e8e8;height:32px !important; margin-bottom:10px;font-size:16px;" required />
+                                                </div>
+                                            </div>
+                                            <div class="row justify-content-center mt-3">
+                                                <button type="submit" class="btn btn-outline-danger w-100 ">Save</button>
+                                            </div>
+                                            <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
+
+
+                                        </div>
+                                    </div>
+
+                                    <!-- aa -->
+                                    <div class="col-sm-8 profile">
+                                        <div class="card-block">
+                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                            <div class="row">
+                                                <div class="col-sm-6 p-3">
+                                                    <p class="m-b-10 f-w-600">First Name</p>
+                                                    <h6 class="text-muted f-w-400">@firstName </h6>
+                                                </div>
+                                                <div class="col-sm-6 p-3">
+                                                    <p class="m-b-10 f-w-600">Last Name</p>
+                                                    <h6 class="text-muted f-w-400">@lastname</h6>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6 p-3">
+                                                    <p class="m-b-10 f-w-600">Date of Birth</p>
+                                                    <h6 class="text-muted f-w-400">@birth.Value.ToString("MM/dd/yyyy")</h6>
+                                                </div>
+                                                <div class="col-sm-6 p-3">
+                                                    <p class="m-b-10 f-w-600">Gender</p>
+                                                    @{
+                                                            if(gender == "0")
+                                                            {
+                                                            <h6 class="text-muted f-w-400">Male</h6>
+                                                            }else if(gender == "1"){
+                                                            <h6 class="text-muted f-w-400">Famale</h6>
+                                                            }else{
+                                                            <h6 class="text-muted f-w-400">Other</h6>
+                                                            }
+
+                                                    }
+                                                   
+                                                </div>
+                                            </div>
+                                            <div class="row" style="margin-bottom:2rem;">
+                                                <div class="col-sm-6 p-3">
+                                                    <p class="m-b-10 f-w-600">Phone Number</p>
+                                                    <h6 class="text-muted f-w-400">@phone</h6>
+                                                </div>
+                                                <div class="col-sm-6 p-3">
+                                                    <p class="m-b-10 f-w-600">Address</p>
+                                                    <h6 class="text-muted f-w-400">@address</h6>
+                                                </div>
+                                            </div>
+                                            @if(TempData["msg"] != null)
+                                            {
+                                                <div class="alert alert-success" role="alert">
+                                                    @TempData["msg"]
+                                                </div>
+                                            }
+                                            
+                                            <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
+                                        </div>
+                                    </div>
+                                    <!-- aa -->
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script>
+        $(document).ready(function () {
+            // Gọi hàm khi click vào phần nội dung modal
+            $('#myModal').on('click', '.modal-content', function (e) {
+                e.stopPropagation(); // Ngăn chặn sự kiện click từ lan toả lên đến phần tử cha
+            });
+        });
+    </script>
+
+
+    <script>
+        // Check TempData value and trigger modal if necessary
+        document.addEventListener('DOMContentLoaded', function () {
+            var shouldOpenModal = @(TempData["power"] != null && TempData["power"].ToString().ToLower() == "true" ? "true" : "false");
+
+            if (shouldOpenModal) {
+                // Trigger your modal display code here
+                // For example, if you're using Bootstrap's modal:
+                $('#myModal').modal('show');
+            }
+        });
+    </script>
+
+
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/jquery-migrate-3.0.1.min.js"></script>
+    <script src="~/js/popper.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.easing.1.3.js"></script>
+    <script src="~/js/jquery.waypoints.min.js"></script>
+    <script src="~/js/jquery.stellar.min.js"></script>
+    <script src="~/js/owl.carousel.min.js"></script>
+    <script src="~/js/jquery.magnific-popup.min.js"></script>
+    <script src="~/js/aos.js"></script>
+    <script src="~/js/jquery.animateNumber.min.js"></script>
+    <script src="~/js/bootstrap-datepicker.js"></script>
+    <script src="~/js/scrollax.min.js"></script>
+    <script src="~/js/google-map.js"></script>
+    <script>
+        // menu
+        document.addEventListener('DOMContentLoaded', () => {
+            const menuIcon = document.getElementById('menu-icon');
+            const dropdownMenu = document.querySelector('.dropdown-menu');
+            let isHover = false;
+
+            menuIcon.addEventListener('click', () => {
+                if (isHover) {
+                    dropdownMenu.classList.remove('show');
+                    isHover = false;
+                } else {
+                    dropdownMenu.classList.add('show');
+                    isHover = true;
+                }
+            });
+
+            document.addEventListener('click', (event) => {
+                const targetElement = event.target;
+                if (!dropdownMenu.contains(targetElement) && !menuIcon.contains(targetElement)) {
+                    dropdownMenu.classList.remove('show');
+                    isHover = false;
+                }
+            });
+        });
+
+
+        const editIcon = document.getElementById('editIcon');
+        const addProfile = document.getElementById('add-profile');
+        const profile = document.querySelector('.profile');
+        const arrowBack = document.querySelector('.arrow-back');
+        const inputFile = document.querySelector('.inputFile');
+        editIcon.addEventListener('click', function () {
+            editIcon.classList.add('hidden');
+            arrowBack.classList.add('display');
+            profile.classList.add('hidden');
+            addProfile.classList.add('display');
+            inputFile.classList.add('display')
+        });
+
+        const arrow = document.getElementById('arrowBack');
+        arrow.addEventListener('click', function () {
+            editIcon.classList.remove('hidden');
+            arrowBack.classList.remove('display');
+            profile.classList.remove('hidden');
+            addProfile.classList.remove('display');
+            inputFile.classList.remove('display')
+
+        });
+
+    </script>
+    @if (TempData.ContainsKey("RegisteredSuccessfully") && (bool)TempData["RegisteredSuccessfully"])
+    {
+        <script>
+            $(document).ready(function () {
+                $('#successModal').modal('show');
+            });
+        </script>
+    }
+
+    <!-- Modal -->
+    <div class="modal" id="successModal" tabindex="-1" role="dialog" style="z-index:100000">
+        <div class="modal-dialog" role="document" style="margin-top:195px">
+            <div class="modal-dialog">
+                <div class="card">
+                    <div class="text-right cross"> <i class="fa fa-times"> </div>
+                    <div class="card-body text-center">
+                        <img src="https://img.icons8.com/bubbles/200/000000/trophy.png">
+                        <h4>WELCOME TO @username !</h4>
+                        @if (TempData["msg"] != null)
+                        {
+                            <p>@TempData["msg"]</p>
+                        }
+
+                        <button class="btn btn-warning btn-square continue">CONTINUE</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <script>
+        $.ajax({
+            url: '/Sample/?id=@id', // Thay '/Sample/GetData' bằng đường dẫn tới action của bạn
+            method: 'GET', // Hoặc 'POST' tùy theo phương thức của action
+            success: function (data) {
+                // Xử lý dữ liệu ở đây và hiển thị trên trang web
+                console.log(data); // Hiển thị dữ liệu trong console
+            },
+            error: function (error) {
+                console.error('Error:', error);
+            }
+        });
+
+
+</script>
+    <script>
+        function previewImage(event) {
+            var input = event.target;
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    // Set the preview image source to the selected file
+                    document.getElementById('preview').src = e.target.result;
+                }
+
+                // Read the selected file as a data URL
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function removeImage() {
+            // Set the preview image source back to the default image
+            document.getElementById('preview').src = "/Uploads/@avatar";
+
+            // Reset the file input field to clear the selected file
+            document.getElementById('fileInput').value = null;
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').keyup(function () {
+                var searchText = $(this).val().trim();
+                if (searchText.length >= 1) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Shop/Search', // Điều hướng đến action xử lý tìm kiếm trong Controller
+                        data: { searchTerm: searchText },
+                        success: function (response) {
+                            displaySuggestions(response); // Hiển thị gợi ý từ kết quả nhận được
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                } else {
+                    $('#suggestions').empty(); // Xóa danh sách gợi ý nếu không có dữ liệu nhập
+                }
+            });
+        });
+
+        function displaySuggestions(suggestions) {
+            var suggestionList = $('#suggestions');
+            suggestionList.empty(); // Xóa danh sách gợi ý cũ trước khi thêm mới
+
+            // Hiển thị danh sách gợi ý
+            suggestions.slice(0, 5).forEach(function (item) {
+                suggestionList.append('<a href="/Shop/ShopDetail?bouquet_id=' + item.bouquet_id + ' ">' +  '<li class="list-group-item d-flex justify-content-between align-items-start">' +
+                    '<div class="ms-2 me-auto">' +
+                    '<img style="height: 60px; width: 100px;" src="/Uploads/' + item.bouquetImage + '" />' +
+                    '</div>' +
+                    '<div class="ms-2 me-auto">' +
+                    '<div class="fw-bold">' + item.name + '</div>' +
+                    '<span>$' + item.price + '</span>' +
+                    '</div>'  +
+                    '</li>' + '</a>');
+
+            });
+        }
+
+    </script>
+    <script src="~/js/main.js"></script>
+</body>
+</html>

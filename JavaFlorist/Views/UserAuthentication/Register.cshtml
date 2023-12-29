@@ -1,0 +1,69 @@
+﻿@model JavaFlorist.Models.DTO.RegistrationModel;
+@{
+    ViewBag.Title = "Register";
+}
+
+
+<div class="hero-wrap hero-bread" style="background-image: url('  ');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Register</span></p>
+                <h1 class="mb-0 bread">Rgister</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Signup Section Begin -->
+<section class="signup spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login__form mt-6">
+                    <form asp-action="Register" method="post">
+                        <div class="form-group">
+                            <label asp-for="Username">Username</label>
+                            <input type="text" asp-for="Username" class="form-control" placeholder="Username">
+                            <span class="text-danger" asp-validation-for="Username"></span>
+                        </div>
+@*                        <div class="form-group">
+                            <label asp-for="Name">Name</label>
+                            <input type="text" asp-for="Name" class="form-control" placeholder="Name">
+                            <span class="text-danger" asp-validation-for="Name"></span>
+                        </div>*@
+                        <div class="form-group">
+                            <label asp-for="Email">Email</label>
+                            <input type="text" asp-for="Email" class="form-control" placeholder="Email">
+                            <span class="text-danger" asp-validation-for="Email"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password">Password</label>
+                            <input type="text" asp-for="Password" class="form-control" placeholder="Password">
+                            <span class="text-danger" asp-validation-for="Password"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="PasswordConfirm">Password Confirm</label>
+                            <input type="text" asp-for="PasswordConfirm" class="form-control" placeholder="Password Confirm">
+                            <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
+                        </div>
+                        <button type="submit" class="btn btn-outline-primary">Login Now</button>
+                    </form>
+                    <h5>Already have an account? <a href="/UserAuthentication/Login">Log In!</a></h5>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__social__links">
+                    <h3 style="color:#000">Login With:</h3>
+                    <ul class="k1">
+                        <li>
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i> Sign in With Facebook</a>
+                        </li>
+                        <li><a href="#" class="google"><i class="fa fa-google"></i> Sign in With Google</a></li>
+                        <li><a href="#" class="twitter"><i class="fa fa-twitter"></i> Sign in With Twitter</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Signup Section End -->

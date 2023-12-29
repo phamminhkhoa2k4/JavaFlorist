@@ -1,0 +1,77 @@
+﻿@model JavaFlorist.Models.DTO.LoginModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<div class="hero-wrap hero-bread" style="background-image: url(' ');">
+    <div class="container">
+        <div class="row no-gutters slider-text align-items-center justify-content-center">
+            <div class="col-md-9 ftco-animate text-center">
+                <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Login</span></p>
+                <h1 class="mb-0 bread">Login</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="login spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="login__form">
+                    <form asp-action="Login" method="post" style="color:#000">
+                        <div class="form-group">
+                            <label asp-for="Username" >Username</label>
+                            <input type="text" asp-for="Username" class="form-control" placeholder="Username">
+                            <span class="text-danger" asp-validation-for="Username"></span>
+                        </div>
+                   
+                            
+                        
+                        <div class="form-group">
+                            <label asp-for="Password">Password</label>
+                            <input type="text" asp-for="Password"  class="form-control" placeholder="Password">
+                            <span class="text-danger"  asp-validation-for="Password"></span>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-outline-primary">Login Now</button>
+                    </form>
+                    <a href="#" class="forget_pass">Forgot Your Password?</a>
+                     @if (TempData["msg"] != null)
+                    {
+                        <div class="alert mb-1">
+
+                            <p class="forget_pass">@TempData["msg"]</p>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="login__register">
+                    <h3>Don’t Have An Account?</h3>
+                    <a href="/UserAuthentication/Register" class="btn  btn-outline-info">Register Now</a>
+                </div>
+            </div>
+        </div>
+        <div class="login__social">
+            <div class="row d-flex justify-content-center">
+                <div class="col-lg-6 k2">
+                    <div class="login__social__links">
+                        <span>or</span>
+                        <ul class="k1">
+                            <li>
+                                <a href="#" class="facebook">
+                                    <i class="fa fa-facebook"></i> Sign in With
+                                    Facebook
+                                </a>
+                            </li>
+                            <li><a href="/signin-google" class="google"><i class="fa fa-google"></i> Sign in With Google</a></li>
+                            <li>
+                                <a href="#" class="twitter"><i class="fa fa-twitter"></i> Sign in With Twitter</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

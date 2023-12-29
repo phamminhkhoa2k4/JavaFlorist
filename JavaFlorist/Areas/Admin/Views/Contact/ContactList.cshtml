@@ -1,0 +1,95 @@
+﻿@model IEnumerable<JavaFlorist.Models.Domain.Contact>;
+@{
+    ViewData["Title"] = "ContactList";
+    Layout = "~/Areas/Admin/Views/Shared/_AdLayout.cshtml";
+}
+
+<div class="container-fluid">
+
+    <div class="row">
+      
+        <div class="col-lg-12 d-flex align-items-stretch">
+            <div class="card w-100">
+                <div class="card-body p-4" style="margin-top:80px;">
+                    <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+                    <div class="table-responsive">
+                        <table class="table text-nowrap mb-0 align-middle">
+                            <thead class="text-dark fs-4">
+                                <tr>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Id</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">name</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Email</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Subject</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Message</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0">Mark as viewed</h6>
+                                    </th>
+                                    <th class="border-bottom-0">
+                                        <h6 class="fw-semibold mb-0 px-5">Action</h6>
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                  
+                                @foreach(var item in  Model )
+                                {
+                                    <tr>
+                                        <td class="border-bottom-0"><h6 class="fw-semibold mb-0">@item.contact_id</h6></td>
+                                        <td class="border-bottom-0">
+                                           <p class="mb-0 fw-normal">@item.name</p>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">@item.email</p>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">@item.subject</p>
+                                        </td>
+                                        <td class="border-bottom-0">
+                                            <p class="mb-0 fw-normal">@item.message</p>
+                                        </td>
+                                         <td class="border-bottom-0">
+                                            @if (item.marked ?? false)
+                                            {
+                                                 <a class="btn btn-info">Marked</a>
+                                            }
+                                            else
+                                            {
+                                                 <a href="/Admin/Contact/Mark?id=@item.contact_id" class="btn btn-info">Mark</a>
+                                            }
+                                           
+                                        </td>
+                                        <td class="border-bottom-0">
+                                             <a href="/Admin/Discount/Edit?id=@item.contact_id" class="btn btn-info">Reply</a>
+                                            <a  onclick="return window.confirm('Are you want delete discount have name @item.name')" href="/Admin/Contact/Delete?id=@item.contact_id" class="btn btn-danger">Delete</A>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                         @if (TempData["msg"] != null)
+                            {
+                                <div class="alert alert-success mt-3" role="alert">
+                                    @TempData["msg"]
+                                </div>
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+
+

@@ -1,0 +1,62 @@
+﻿@model JavaFlorist.Models.Domain.Blog;
+@{
+    ViewData["Title"] = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_AdLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title fw-semibold mb-4">Forms</h5>
+                <div class="card mt-5">
+                    <div class="card-body">
+                        <form class="w-40" method="post" asp-action="Add"  style="background-color:#ffffff;border-radius:5px;padding:24px" enctype="multipart/form-data">
+                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                            <input type="hidden" name="blog_date" value="01/01/2024" />
+                            <div class="row mb-4">
+                                <div class="form-outline">
+                                    <label class="form-label" asp-for="title">Title</label>
+                                    <input type="text" asp-for="title" name="title" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                </div>
+                                <div class="message-box pd-x-28 error">
+                                    <span asp-validation-for="title"> </span>
+                                </div>
+                            </div>
+                            <!-- 2 column grid layout with text inputs for the first and last names -->
+                            <div class="row mb-4">
+                                <div class="col">
+                                    <div class="form-outline">
+                                        <label class="form-label" asp-for="ImageFile">Thumnail</label>
+                                        <input type="file" asp-for="ImageFile" name="ImageFile" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                    </div>
+                                    <div class="message-box pd-x-28 error">
+                                        <span asp-validation-for="ImageFile"> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="form-outline">
+                                    <label class="form-label" asp-for="content">Content</label>
+                                    <textarea class="form-control" style="border: 1px solid #e8e8e8;" asp-for="content" name="content" rows="4"></textarea>
+                                </div>
+                                <div class="message-box pd-x-28 error">
+                                    <span asp-validation-for="content"> </span>
+                                </div>
+                            </div>
+                            @if (TempData["msg"] != null)
+                            {
+                                <div class="alert alert-danger mt-3" role="alert">
+                                    @TempData["msg"]
+                                </div>
+                            }
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-danger btn-block mt-4 mb-6">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
