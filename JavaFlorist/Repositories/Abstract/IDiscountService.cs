@@ -8,5 +8,6 @@ namespace JavaFlorist.Repositories.Abstract
         Discount GetById(int id);
         bool Delete(int id);
         IQueryable<Discount> List();
+        Discount GetDiscountByCode(string code);
     }
 }

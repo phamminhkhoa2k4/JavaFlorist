@@ -1,6 +1,6 @@
 ﻿@model JavaFlorist.Models.DTO.Cart
 @{
-    ViewBag.Title = "Cart";
+	ViewBag.Title = "Cart";
 }
 
 
@@ -46,7 +46,7 @@
 											<p>Far far away, behind the word mountains, far from the countries</p>
 										</td>
 
-										<td class="price">$@item.Bouquet.price</td>
+										<td class="price" id="price_@item.Bouquet.bouquet_id" >$@item.Bouquet.price</td>
 
 										<td class="quantity">
 											<div class="input-group mb-3">
@@ -54,19 +54,15 @@
 											</div>
 										</td>
 
-										<td class="total">$@(item.Bouquet.price * item.Quantity)</td>
+										<td id="total_@item.Bouquet.bouquet_id" class="total">$@(item.Bouquet.price * item.Quantity)</td>
 									</tr>
 								}
 							}
 							else
 							{
 								<tr class="text-center">
-									<td>ko co gi</td>
-									<td>ko co gi</td>
-									<td>ko co gi</td>
-									<td>ko co gi</td>
-									<td>ko co gi</td>
-									<td>ko co gi</td>
+									<td colspan="6">ko co gi</td>
+									
 								</tr>
 							}
 
@@ -81,40 +77,41 @@
 		</div>
 		<div class="row justify-content-end">
 			<div class="col-lg-6 mt-5 cart-wrap ftco-animate">
+					<form asp-action="Apply" asp-controller="Discount" class="info">
 				<div class="cart-total mb-3">
 					<h3>Coupon Code</h3>
 					<p>Enter your coupon code if you have one</p>
-					<form action="#" class="info">
 						<div class="form-group">
 							<label for="">Coupon code</label>
-							<input type="text" class="form-control text-left px-3" placeholder="">
+							<input type="text" name="code" class="form-control text-left px-3" placeholder="">
 						</div>
-					</form>
+					
 				</div>
-				<p><a href="checkout.html" class="btn btn-primary py-3 px-4">Apply Coupon</a></p>
+				<p><button type="submit" class="btn btn-primary py-3 px-4">Apply Coupon</button></p>
+				</form>
 			</div>
 			<div class="col-lg-6 mt-5 cart-wrap ftco-animate">
 				<div class="cart-total mb-3">
 					<h3>Cart Totals</h3>
 					<p class="d-flex">
 						<span>Subtotal</span>
-						<span>$20.60</span>
+						<span id="subtotal">$0.00</span>
 					</p>
 					<p class="d-flex">
 						<span>Delivery</span>
-						<span>$0.00</span>
+						<span id="delivery">$0.00</span>
 					</p>
 					<p class="d-flex">
 						<span>Discount</span>
-						<span>$3.00</span>
+						<span id="discount" >$0.00</span>
 					</p>
 					<hr>
 					<p class="d-flex total-price">
 						<span>Total</span>
-						<span>$17.60</span>
+						<span id="total" >$0.00</span>
 					</p>
 				</div>
-				<p><a href="/Cart/Checkout" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+				<p><a href="/Cart/Checkout"  class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
 			</div>
 		</div>
 	</div>

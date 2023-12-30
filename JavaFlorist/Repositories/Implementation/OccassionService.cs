@@ -1,25 +1,25 @@
 ﻿using JavaFlorist.Models.Domain;
 using JavaFlorist.Repositories.Abstract;
-using Microsoft.EntityFrameworkCore;
 
 namespace JavaFlorist.Repositories.Implementation
 {
-    public class DiscountService : IDiscountService
+    public class OccassionService : IOccassionService
     {
         private readonly DatabaseContext ctx;
 
-        public DiscountService(DatabaseContext ctx)
+        public OccassionService(DatabaseContext ctx)
         {
             this.ctx = ctx;
         }
-        public bool Add(Discount model)
+        public bool Add(Occasion model)
         {
             try
             {
-                ctx.Discount.Add(model);
+                ctx.Occassion.Add(model);
                 ctx.SaveChanges();
                 return true;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 return false;
             }
@@ -32,41 +32,43 @@ namespace JavaFlorist.Repositories.Implementation
                 var data = this.GetById(id);
                 if (data == null)
                     return false;
-                ctx.Discount.Remove(data);
+                ctx.Occassion.Remove(data);
                 ctx.SaveChanges();
                 return true;
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return false;
             }
-          
+
         }
 
-        public Discount GetById(int id)
+        public Occasion GetById(int id)
         {
-            return ctx.Discount.Find(id);
+            return ctx.Occassion.Find(id);
         }
 
-        public  Discount GetDiscountByCode(string code)
+        public Discount GetDiscountByCode(string code)
         {
             return ctx.Discount.FirstOrDefault(d => d.code == code);
         }
 
-        public IQueryable<Discount> List()
+        public IQueryable<Occasion> List()
         {
-           var data = ctx.Discount.AsQueryable();
+            var data = ctx.Occassion.AsQueryable();
             return data;
 
         }
 
-        public bool Update(Discount model)
+        public bool Update(Occasion model)
         {
             try
             {
-                ctx.Discount.Update(model);
+                ctx.Occassion.Update(model);
                 ctx.SaveChanges();
                 return true;
-            }catch( Exception ex)
+            }
+            catch (Exception ex)
             {
                 return false;
             }

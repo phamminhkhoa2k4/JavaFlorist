@@ -920,8 +920,108 @@
             });
         });
 
+        document.querySelectorAll('.quantity').forEach(input => {
+            input.addEventListener('change', function () {
+                const quantity = this.value;
+                const bouquetId = this.id.split('_')[1];
+                const price = parseFloat(document.querySelector(`#price_${bouquetId}`).innerText.replace('$', ''));
+                const totalElement = document.querySelector(`#total_${bouquetId}`);
+                const total = quantity * price;
+
+                if (quantity <= 0) {
+                    const confirmRemove = confirm('Are you sure you want to remove this item from the cart?');
+                    if (confirmRemove) {
+                        // Redirect to the RemoveFromCart action
+                        window.location.href = `/Cart/RemoveFromCart?bouquetId=${bouquetId}`;
+                    } else {
+                        // Reset the quantity to 1 or any default value you prefer
+                        this.value = 1;
+                        // Update the total in case the quantity was changed back to a positive value
+                        totalElement.innerText = `$${price.toFixed(2)}`;
+                    }
+                } else {
+                    totalElement.innerText = `$${total}`;
+                }
+            });
+        });
 
     </script>
+    <script>
+        function updateCartTotals() {
+            let subtotal = 0;
+            const items = document.querySelectorAll('.total');
+            items.forEach(item => {
+                subtotal += parseFloat(item.innerText.replace('$', '') || 0); // Use `|| 0` to avoid NaN if there's an empty string
+            });
+
+            const delivery = 2; // Set your delivery cost here
+            let discount = 0; // Set your discount here
+          
+            const total = subtotal + delivery - discount;
+
+            document.querySelector('#subtotal').innerText = `$${subtotal.toFixed(2)}`;
+            document.querySelector('#delivery').innerText = `$${delivery.toFixed(2)}`;
+            document.querySelector('#discount').innerText = `$${discount.toFixed(2)}`;
+            document.querySelector('#total').innerText = `$${total.toFixed(2)}`;
+        }
+       
+        document.addEventListener("DOMContentLoaded", function () {
+            setTimeout(updateCartTotals, 500);
+            const quantityInputs = document.querySelectorAll('.quantity');
+
+            quantityInputs.forEach(input => {
+                input.addEventListener('change', function () {
+                    const quantity = this.value;
+                    const bouquetId = this.id.split('_')[1];
+                    const price = parseFloat(document.querySelector(`#price_${bouquetId}`).innerText.replace('$', '')) || 0;
+                    const totalElement = document.querySelector(`#total_${bouquetId}`);
+                    const total = quantity * price;
+
+                    totalElement.innerText = `$${total.toFixed(2)}`;
+                    updateCartTotals();
+                });
+            });
+       
+        });
+
+
+        // Thực hiện khi form được submit
+        $('form.info').submit(function (e) {
+            e.preventDefault(); // Ngăn chặn hành động mặc định của form
+
+            var formData = $(this).serialize(); // Lấy dữ liệu từ form
+            $.ajax({
+                type: "POST",
+                url: '/Discount/ApplyDiscount', // Đường dẫn đến hành động ApplyDiscount trong controller Discount
+                data: formData,
+                success: function (response) {
+                    // Xử lý phản hồi trả về từ controller
+                    var discount = response.discount; // Lấy giá trị giảm giá từ phản hồi
+
+                    // Update thông tin giảm giá trong trang
+                    $('#discount').text('$' + discount.toFixed(2));
+                    
+                    // Các bước cập nhật thông tin khác nếu cần
+
+                    // Hiển thị thông báo hoặc thực hiện hành động khác nếu cần
+                },
+                error: function (error) {
+                    // Xử lý khi có lỗi nếu cần
+                }
+            });
+        });
+
+
+
+
+
+
+     
+
+        
+
+    </script>
+
     <script src="~/js/main.js"></script>
 </body>
 </html>

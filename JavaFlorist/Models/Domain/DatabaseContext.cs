@@ -21,7 +21,7 @@ namespace JavaFlorist.Models.Domain
         public DbSet<Discount> Discount { get; set; }
         //public DbSet<Order>? Order  { get; set; }
         public DbSet<Wishlist> Wishlist { get; set; }
-        //public DbSet<Occasion>? Occassion  { get; set; }
+        public DbSet<Occasion> Occassion { get; set; }
         public DbSet<Contact> Contact { get; set; }
         //public DbSet<Delivery_Info>? Delivery_Info { get; set; }
         public DbSet<Bouquet_Info> Bouquet_Info { get; set; }
