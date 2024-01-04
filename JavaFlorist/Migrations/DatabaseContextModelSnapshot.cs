@@ -157,6 +157,51 @@ namespace JavaFlorist.Migrations
                     b.ToTable("Bouquet_Info");
                 });
 
+            modelBuilder.Entity("JavaFlorist.Models.Domain.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"), 1L, 1);
+
+                    b.HasKey("CartId");
+
+                    b.ToTable("Carts");
+                });
+
+            modelBuilder.Entity("JavaFlorist.Models.Domain.CartItem", b =>
+                {
+                    b.Property<int>("CartItemId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"), 1L, 1);
+
+                    b.Property<int?>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubTotal")
+                        .HasColumnType("int");
+
+                    b.Property<int>("bouquet_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cust_id")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartItemId");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("bouquet_id");
+
+                    b.ToTable("CartItems");
+                });
+
             modelBuilder.Entity("JavaFlorist.Models.Domain.Contact", b =>
                 {
                     b.Property<int>("contact_id")
@@ -222,6 +267,31 @@ namespace JavaFlorist.Migrations
                     b.ToTable("Customer");
                 });
 
+            modelBuilder.Entity("JavaFlorist.Models.Domain.Delivery_Info", b =>
+                {
+                    b.Property<int>("delivery_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("delivery_id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Phone")
+                        .HasColumnType("int");
+
+                    b.HasKey("delivery_id");
+
+                    b.ToTable("Delivery_Info");
+                });
+
             modelBuilder.Entity("JavaFlorist.Models.Domain.Discount", b =>
                 {
                     b.Property<int>("discount_id")
@@ -243,6 +313,70 @@ namespace JavaFlorist.Migrations
                     b.HasKey("discount_id");
 
                     b.ToTable("Discount");
+                });
+
+            modelBuilder.Entity("JavaFlorist.Models.Domain.Occasion", b =>
+                {
+                    b.Property<int>("Occasion_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Occasion_id"), 1L, 1);
+
+                    b.Property<string>("Occasion_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Occasion_id");
+
+                    b.ToTable("Occassion");
+                });
+
+            modelBuilder.Entity("JavaFlorist.Models.Domain.Order", b =>
+                {
+                    b.Property<int>("order_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("order_id"), 1L, 1);
+
+                    b.Property<int>("CartId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Occasion_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Total")
+                        .HasColumnType("int");
+
+                    b.Property<int>("cust_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("delivery_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("discount_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("order_date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("order_id");
+
+                    b.HasIndex("CartId");
+
+                    b.HasIndex("Occasion_id");
+
+                    b.HasIndex("cust_id");
+
+                    b.HasIndex("delivery_id");
+
+                    b.HasIndex("discount_id");
+
+                    b.ToTable("Order");
                 });
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Wishlist", b =>
@@ -345,19 +479,22 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.Property<string>("UserId")
+                    b.Property<string>("LoginProvider")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("UserId");
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("AspNetUserLogins", (string)null);
                 });
@@ -405,6 +542,64 @@ namespace JavaFlorist.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("JavaFlorist.Models.Domain.CartItem", b =>
+                {
+                    b.HasOne("JavaFlorist.Models.Domain.Cart", null)
+                        .WithMany("Items")
+                        .HasForeignKey("CartId");
+
+                    b.HasOne("JavaFlorist.Models.Domain.Bouquet_Info", "Bouquet")
+                        .WithMany()
+                        .HasForeignKey("bouquet_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bouquet");
+                });
+
+            modelBuilder.Entity("JavaFlorist.Models.Domain.Order", b =>
+                {
+                    b.HasOne("JavaFlorist.Models.Domain.Cart", "Cart")
+                        .WithMany()
+                        .HasForeignKey("CartId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JavaFlorist.Models.Domain.Occasion", "Occasion")
+                        .WithMany()
+                        .HasForeignKey("Occasion_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JavaFlorist.Models.Domain.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("cust_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JavaFlorist.Models.Domain.Delivery_Info", "Delivery_Info")
+                        .WithMany()
+                        .HasForeignKey("delivery_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("JavaFlorist.Models.Domain.Discount", "Discount")
+                        .WithMany()
+                        .HasForeignKey("discount_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cart");
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Delivery_Info");
+
+                    b.Navigation("Discount");
+
+                    b.Navigation("Occasion");
                 });
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Wishlist", b =>
@@ -467,6 +662,11 @@ namespace JavaFlorist.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("JavaFlorist.Models.Domain.Cart", b =>
+                {
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

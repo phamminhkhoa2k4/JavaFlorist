@@ -1,16 +1,15 @@
 ﻿using JavaFlorist.Models.Domain;
-using JavaFlorist.Models.DTO;
 
 namespace JavaFlorist.Repositories.Abstract
 {
     public interface ICartService
     {
-        Cart GetCart();
-        void AddItemToCart(Bouquet_Info bouquet, int quantity);
-        void RemoveItemFromCart(Bouquet_Info bouquet);
-        int CalculateTotalValue();
-        void ClearCart();
-        void UpdateQuantity(int bouquetId, int newQuantity);
+        Cart GetCart(int cust_id);
+        void AddItemToCart(Bouquet_Info bouquet, int quantity ,int cust_id);
+        void RemoveItemFromCart(Bouquet_Info bouquet, int cust_id);
+        int CalculateTotalValue(int cust_id);
+        void ClearCart(int cust_id);
+        void UpdateQuantity(int bouquetId, int newQuantity , int cust_id);
 
 	}
 }

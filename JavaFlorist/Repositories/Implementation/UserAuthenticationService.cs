@@ -197,7 +197,29 @@ namespace JavaFlorist.Repositories.Implementation
         }
 
 
+        public async Task<IEnumerable<ApplicationUser>> GetAllUsersInRole()
+        {
+            var usersInRole = await userManager.GetUsersInRoleAsync("User");
+            return usersInRole;
+        }
 
+        public async Task<IEnumerable<ApplicationUser>> GetAllAdminsInRole()
+        {
+            var AdminsInRole = await userManager.GetUsersInRoleAsync("Admin");
+            return AdminsInRole;
+        }
+
+        public async Task<bool> DeleteUser(string userId)
+        {
+            var userToDelete = await userManager.FindByIdAsync(userId);
+            if (userToDelete == null)
+            {
+                return false;
+            }
+
+            var result = await userManager.DeleteAsync(userToDelete);
+            return result.Succeeded;
+        }
         //public async task<status> changepasswordasync(changepasswordmodel model, string username)
         //{
         //    var status = new status();

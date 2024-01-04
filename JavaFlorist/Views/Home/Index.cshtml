@@ -65,54 +65,60 @@
 <section class="ftco-section ftco-category ftco-no-pt">
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-6 order-md-last align-items-stretch d-flex">
-                        <div class="category-wrap-2 ftco-animate img align-self-stretch d-flex"
-                             style="background-image: url(/Uploads/@Model[0].topFiveProducts[0].bouquetImage
-)">
-                            <div class="text text-center">
-                                <h2>Flowers</h2>
-                                <p>gift to someone you love</p>
-                                <p><a href="/Shop/Shop" class="btn btn-primary">Shop now</a></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
-                             style="background-image: url(/Uploads/@Model[0].topFiveProducts[1].bouquetImage
-)">
-                            <div class="text px-3 py-1">
-                                <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[1].category</a></h2>
-                            </div>
-                        </div>
-                        <div class="category-wrap ftco-animate img d-flex align-items-end"
-                             style="background-image: url(/Uploads/@Model[0].topFiveProducts[2].bouquetImage
-)">
-                            <div class="text px-3 py-1">
-                                <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[2].category</a></h2>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            @if (Model != null && Model.Count > 0 && Model[0].topFiveProducts != null && Model[0].topFiveProducts.Count > 5)
+            {
+                <div class="col-md-8">
+                    <div class="row">
 
-            <div class="col-md-4">
-                <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
-                     style="background-image: url(/Uploads/@Model[0].topFiveProducts[3].bouquetImage
+
+                        <div class="col-md-6 order-md-last align-items-stretch d-flex">
+                            <div class="category-wrap-2 ftco-animate img align-self-stretch d-flex"
+                                 style="background-image: url(/Uploads/@Model[0].topFiveProducts[0].bouquetImage ??
 )">
-                    <div class="text px-3 py-1">
-                        <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[3].category</a></h2>
+                                <div class="text text-center">
+                                    <h2>Flowers</h2>
+                                    <p>gift to someone you love</p>
+                                    <p><a href="/Shop/Shop" class="btn btn-primary">Shop now</a></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
+                                 style="background-image: url(/Uploads/@Model[0].topFiveProducts[1].bouquetImage
+)">
+                                <div class="text px-3 py-1">
+                                    <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[1].category</a></h2>
+                                </div>
+                            </div>
+                            <div class="category-wrap ftco-animate img d-flex align-items-end"
+                                 style="background-image: url(/Uploads/@Model[0].topFiveProducts[2].bouquetImage
+)">
+                                <div class="text px-3 py-1">
+                                    <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[2].category</a></h2>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="category-wrap ftco-animate img d-flex align-items-end"
-                     style="background-image: url(/Uploads/@Model[0].topFiveProducts[4].bouquetImage
+
+                <div class="col-md-4">
+                    <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
+                         style="background-image: url(/Uploads/@Model[0].topFiveProducts[3].bouquetImage
 )">
-                    <div class="text px-3 py-1">
-                        <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[4].category</a></h2>
+                        <div class="text px-3 py-1">
+                            <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[3].category</a></h2>
+                        </div>
+                    </div>
+                    <div class="category-wrap ftco-animate img d-flex align-items-end"
+                         style="background-image: url(/Uploads/@Model[0].topFiveProducts[4].bouquetImage
+)">
+                        <div class="text px-3 py-1">
+                            <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[4].category</a></h2>
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
+           
         </div>
     </div>
 </section>
@@ -123,7 +129,7 @@
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
             <div class="col-md-12 heading-section text-center ftco-animate">
-                <span class="subheading">Featured Products</span>
+                <span class="subheading">Typical Products</span>
                 <h2 class="mb-4">Our Products</h2>
                 <p>
                     Far far away, behind the word mountains, far from the countries
@@ -134,45 +140,49 @@
     </div>
     <div class="container">
         <div class="row">
-            @foreach( var item in Model[0].topProducts)
+            @if (Model != null && Model.Count > 0 && Model[0].topProducts != null && Model[0].topProducts.Count > 0)
             {
-            <div class="col-md-6 col-lg-3 ftco-animate">
-                <div class="product">
-                    <a href="#" class="img-prod">
-                        <img class="img-fluid"
-                             src="/Uploads/@item.bouquetImage" />
-                        <span class="status">30%</span>
-                        <div class="overlay"></div>
-                    </a>
-                    <div class="text py-3 pb-4 px-3 text-center">
-                        <h3><a href="#">@item.name</a></h3>
-                        <div class="d-flex">
-                            <div class="pricing">
-                                <p class="price">
-                                    <span class="mr-2 price-dc">$@item.quantity</span><span class="price-sale">$@item.price</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="bottom-area d-flex px-3">
-                            <div class="m-auto d-flex">
-                                <a href="#"
-                                   class="add-to-cart d-flex justify-content-center align-items-center text-center">
-                                    <span><i class="ion-ios-menu"></i></span>
-                                </a>
-                                <a href="#"
-                                   class="buy-now d-flex justify-content-center align-items-center mx-1">
-                                    <span><i class="ion-ios-cart"></i></span>
-                                </a>
-                                <a href="#"
-                                   class="heart d-flex justify-content-center align-items-center">
-                                    <span><i class="ion-ios-heart"></i></span>
-                                </a>
+                @foreach (var item in Model[0].topProducts)
+                {
+                    <div class="col-md-6 col-lg-3 ftco-animate">
+                        <div class="product">
+                            <a href="#" class="img-prod">
+                                <img class="img-fluid"
+                                     src="/Uploads/@item.bouquetImage" />
+                                <span class="status">30%</span>
+                                <div class="overlay"></div>
+                            </a>
+                            <div class="text py-3 pb-4 px-3 text-center">
+                                <h3><a href="#">@item.name</a></h3>
+                                <div class="d-flex">
+                                    <div class="pricing">
+                                        <p class="price">
+                                            <span class="mr-2 price-dc">$@item.quantity </span><span class="price-sale">$@item.price</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="bottom-area d-flex px-3">
+                                    <div class="m-auto d-flex">
+                                        <a href="#"
+                                           class="add-to-cart d-flex justify-content-center align-items-center text-center">
+                                            <span><i class="ion-ios-menu"></i></span>
+                                        </a>
+                                        <a href="#"
+                                           class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                            <span><i class="ion-ios-cart"></i></span>
+                                        </a>
+                                        <a href="#"
+                                           class="heart d-flex justify-content-center align-items-center">
+                                            <span><i class="ion-ios-heart"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
+                }
             }
+           
            
            
         </div>

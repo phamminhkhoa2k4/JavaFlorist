@@ -1,6 +1,7 @@
-﻿@model JavaFlorist.Models.DTO.Cart
+﻿@model JavaFlorist.Models.Domain.Cart;
 @{
 	ViewBag.Title = "Cart";
+	int id = 0;
 }
 
 
@@ -37,15 +38,19 @@
 								@foreach (var item in Model.Items)
 								{
 									<tr class="text-center">
-										<td class="product-remove"><a href="/Cart/RemoveFromCart?bouquetId=@item.Bouquet.bouquet_id"><span class="ion-ios-close"></span></a></td>
+										<td class="product-remove"><a href="/Cart/RemoveFromCart?bouquetId=@item.Bouquet.bouquet_id&cust_id=@item.cust_id"><span class="ion-ios-close"></span></a></td>
 
 										<td class="image-prod"><div class="img" style="background-image:url(/Uploads/@item.Bouquet.bouquetImage);"></div></td>
 
 										<td class="product-name">
 											<h3>@item.Bouquet.name</h3>
 											<p>Far far away, behind the word mountains, far from the countries</p>
+											<p>@item.SubTotal</p>
+											
 										</td>
-
+										@{
+											 id = item.cust_id;
+										}
 										<td class="price" id="price_@item.Bouquet.bouquet_id" >$@item.Bouquet.price</td>
 
 										<td class="quantity">
@@ -61,58 +66,65 @@
 							else
 							{
 								<tr class="text-center">
-									<td colspan="6">ko co gi</td>
+									<td colspan="6"><h3 class="text-danger">The shopping cart is empty => <a href="/Shop/Shop" class="btn btn-danger">go to Shop</a></h3></td>
 									
 								</tr>
+								
 							}
 
 
 					
 						</tbody>
 					</table>
-					<a href="/Cart/ClearCart" class="btn btn-primary mx-5 mb-5">Clear</a>
+					@if(Model.Items.Count > 0){
+						<a href="/Cart/ClearCart?cust_id=@id" class="btn btn-warning mx-5 mb-5">Clear</a>
+
+					}
 				
 				</div>
 			</div>
 		</div>
-		<div class="row justify-content-end">
-			<div class="col-lg-6 mt-5 cart-wrap ftco-animate">
+		@if (Model.Items.Count > 0)
+		{
+			<div class="row justify-content-end">
+				<div class="col-lg-6 mt-5 cart-wrap ftco-animate">
 					<form asp-action="Apply" asp-controller="Discount" class="info">
-				<div class="cart-total mb-3">
-					<h3>Coupon Code</h3>
-					<p>Enter your coupon code if you have one</p>
-						<div class="form-group">
-							<label for="">Coupon code</label>
-							<input type="text" name="code" class="form-control text-left px-3" placeholder="">
+						<div class="cart-total mb-3">
+							<h3>Coupon Code</h3>
+							<p>Enter your coupon code if you have one</p>
+							<div class="form-group">
+								<label for="">Coupon code</label>
+								<input type="text" name="code" class="form-control text-left px-3" placeholder="">
+							</div>
+
 						</div>
-					
+						<p><button type="submit" class="btn btn-primary py-3 px-4">Apply Coupon</button></p>
+					</form>
 				</div>
-				<p><button type="submit" class="btn btn-primary py-3 px-4">Apply Coupon</button></p>
-				</form>
-			</div>
-			<div class="col-lg-6 mt-5 cart-wrap ftco-animate">
-				<div class="cart-total mb-3">
-					<h3>Cart Totals</h3>
-					<p class="d-flex">
-						<span>Subtotal</span>
-						<span id="subtotal">$0.00</span>
-					</p>
-					<p class="d-flex">
-						<span>Delivery</span>
-						<span id="delivery">$0.00</span>
-					</p>
-					<p class="d-flex">
-						<span>Discount</span>
-						<span id="discount" >$0.00</span>
-					</p>
-					<hr>
-					<p class="d-flex total-price">
-						<span>Total</span>
-						<span id="total" >$0.00</span>
-					</p>
+				<div class="col-lg-6 mt-5 cart-wrap ftco-animate">
+					<div class="cart-total mb-3">
+						<h3>Cart Totals</h3>
+						<p class="d-flex">
+							<span>Subtotal</span>
+							<span id="subtotal">$0.00</span>
+						</p>
+						<p class="d-flex">
+							<span>Delivery</span>
+							<span id="delivery">$0.00</span>
+						</p>
+						<p class="d-flex">
+							<span>Discount</span>
+							<span id="discount">$0.00</span>
+						</p>
+						<hr>
+						<p class="d-flex total-price">
+							<span>Total</span>
+							<span id="total">$0.00</span>
+						</p>
+					</div>
+					<p><a href="/Cart/Checkout?cust_id=@id" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
 				</div>
-				<p><a href="/Cart/Checkout"  class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
 			</div>
-		</div>
+		}
 	</div>
 </section>

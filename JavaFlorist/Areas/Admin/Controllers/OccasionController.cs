@@ -40,7 +40,7 @@ namespace JavaFlorist.Areas.Admin.Controllers
             if (result)
             {
                 TempData["msg"] = "Added Successfully";
-                return RedirectToAction("/");
+                return RedirectToAction(nameof(OccasionList));
             }
             else
             {
@@ -69,7 +69,7 @@ namespace JavaFlorist.Areas.Admin.Controllers
             if (result)
             {
                 TempData["msg"] = "Updated Successfully";
-                return RedirectToAction("/");
+                return RedirectToAction(nameof(OccasionList));
             }
             else
             {
@@ -82,7 +82,7 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var result = _occasionService.Delete(id);
-            return RedirectToAction();
+            return RedirectToAction(nameof(OccasionList));
         }
     }
 }
