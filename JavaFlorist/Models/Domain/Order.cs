@@ -17,8 +17,8 @@ namespace JavaFlorist.Models.Domain
 		public Customer Customer { get; set; }
 
 		[ForeignKey("Discount")]
-		public int discount_id { get; set; } //
-		public Discount Discount { get; set; }
+		public int? discount_id { get; set; } //
+		public Discount? Discount { get; set; }
 
 
 		public int delivery_id { get; set; }

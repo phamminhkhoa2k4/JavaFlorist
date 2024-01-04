@@ -11,7 +11,7 @@ namespace JavaFlorist.Models.Domain
 		public Bouquet_Info Bouquet { get; set; }
 		public int Quantity { get; set; }
 	    
-		public int SubTotal { get; set; }
+		public decimal SubTotal { get; set; }
 		public int cust_id { get; set; }
 	}
 }

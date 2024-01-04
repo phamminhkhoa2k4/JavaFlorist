@@ -10,16 +10,16 @@ namespace JavaFlorist.Models.Domain
         [Key]
         public int delivery_id { get; set; }
 
-		
+        [Required]
         public string? Name { get; set; }
 
-
+        [Required]
         public string? Address { get; set; }
+        [Required]
+        public long Phone { get; set; }
 
-        public int Phone { get; set; }
-
-
-		public DateTime Date { get; set; }
+        [Required]
+        public DateTime Date { get; set; }
 
 
 		

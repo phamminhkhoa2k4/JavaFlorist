@@ -33,7 +33,7 @@ namespace JavaFlorist.Models.Domain
 
 		public void RemoveItem(Bouquet_Info bouquet) => Items.RemoveAll(i => i.Bouquet.bouquet_id == bouquet.bouquet_id);
 
-		public int TotolValue() => Items.Sum(e => e.Bouquet.price * e.Quantity);
+		
 
 		public void UpdateQuantity(int bouquetId, int newQuantity)
 		{

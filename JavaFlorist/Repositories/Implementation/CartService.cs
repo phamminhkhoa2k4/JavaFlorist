@@ -23,11 +23,11 @@ namespace JavaFlorist.Repositories.Implementation
             SaveCart(cart, cust_id);
         }
 
-        public int CalculateTotalValue(int cust_id)
-        {
-            var cart = GetCart(cust_id);
-            return cart.TotolValue();
-        }
+        //public int CalculateTotalValue(int cust_id)
+        //{
+        //    var cart = GetCart(cust_id);
+        //    return cart.TotolValue();
+        //}
 
         public void ClearCart(int cust_id)
         {

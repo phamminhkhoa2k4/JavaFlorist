@@ -18,14 +18,14 @@ namespace JavaFlorist.Areas.Admin.Controllers
         [Area("Admin")]
         public async Task<IActionResult> UserList()
         {
-            var usersInRole = await authService.GetAllUsersInRole();
+            var usersInRole = await authService.GetAllUsersInRole("User");
             return View(usersInRole);
         }
         [Area("Admin")]
 
         public async Task<IActionResult> AdminList()
         {
-            var admins = await authService.GetAllAdminsInRole();
+            var admins = await authService.GetAllUsersInRole("Admin");
             return View(admins);
         }
 
@@ -34,7 +34,7 @@ namespace JavaFlorist.Areas.Admin.Controllers
             var isDeleted = await authService.DeleteUser(userId);
             if (isDeleted)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(AdminList));
             }
 
             return View("Error");

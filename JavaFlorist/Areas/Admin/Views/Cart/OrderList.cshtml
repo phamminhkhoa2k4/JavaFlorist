@@ -63,10 +63,10 @@
                                             <p class="mb-0 fw-normal">@order.Delivery_Info.Address</p>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">@order.Delivery_Info.Date</p>
+                                            <p class="mb-0 fw-normal">@order.Delivery_Info.Date.ToString("MM/dd/yyyy")</p>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <p class="mb-0 fw-normal">@order.order_date</p>
+                                            <p class="mb-0 fw-normal">@order.order_date.ToString("MM/dd/yyyy")</p>
                                         </td>
                                         <td class="border-bottom-0">
                                             <h6 class="fw-semibold mb-0 fs-4">$@order.Total</h6>

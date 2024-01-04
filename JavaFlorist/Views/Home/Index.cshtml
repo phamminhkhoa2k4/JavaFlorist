@@ -65,7 +65,7 @@
 <section class="ftco-section ftco-category ftco-no-pt">
     <div class="container">
         <div class="row">
-            @if (Model != null && Model.Count > 0 && Model[0].topFiveProducts != null && Model[0].topFiveProducts.Count > 5)
+            @if (Model != null && Model.Count > 0 && Model[0].topFiveProducts != null && Model[0].topFiveProducts.Count >= 5)
             {
                 <div class="col-md-8">
                     <div class="row">
@@ -73,8 +73,7 @@
 
                         <div class="col-md-6 order-md-last align-items-stretch d-flex">
                             <div class="category-wrap-2 ftco-animate img align-self-stretch d-flex"
-                                 style="background-image: url(/Uploads/@Model[0].topFiveProducts[0].bouquetImage ??
-)">
+                                 style="background-image: url(/Uploads/@Model[0].topFiveProducts[0].bouquetImage)">
                                 <div class="text text-center">
                                     <h2>Flowers</h2>
                                     <p>gift to someone you love</p>
@@ -157,7 +156,7 @@
                                 <div class="d-flex">
                                     <div class="pricing">
                                         <p class="price">
-                                            <span class="mr-2 price-dc">$@item.quantity </span><span class="price-sale">$@item.price</span>
+                                          <span class="price-sale">$@item.price</span>
                                         </p>
                                     </div>
                                 </div>

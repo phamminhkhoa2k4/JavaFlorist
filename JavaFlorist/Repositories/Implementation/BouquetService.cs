@@ -1,7 +1,6 @@
 ﻿using JavaFlorist.Models.Domain;
 using JavaFlorist.Models.DTO;
 using JavaFlorist.Repositories.Abstract;
-using Microsoft.EntityFrameworkCore;
 
 namespace JavaFlorist.Repositories.Implementation
 {
@@ -62,12 +61,10 @@ namespace JavaFlorist.Repositories.Implementation
 
         public List<Bouquet_Info> GetRelatedBouquets(int bouquet_id)
         {
-            var bouquet = this.GetById(bouquet_id); // Lấy thông tin sản phẩm theo ID
+            var bouquet = this.GetById(bouquet_id);
 
-            // Lấy các sản phẩm khác cùng thể loại với sản phẩm hiện tại (bouquet)
             var relatedBouquets = this.GetByCategory(bouquet.category);
 
-            // Loại bỏ sản phẩm hiện tại khỏi danh sách sản phẩm liên quan
             relatedBouquets = relatedBouquets.Where(b => b.bouquet_id != bouquet_id).Take(4).ToList();
 
             return relatedBouquets;
@@ -94,10 +91,8 @@ namespace JavaFlorist.Repositories.Implementation
                 .Select(group => group.OrderByDescending(b => b.sold).FirstOrDefault())
                 .ToList();
 
-            // Fetching IDs of already selected products
             var topProductIds = topFiveProducts.Select(tp => tp.bouquet_id).ToList();
 
-            // Fetching additional products beyond the top categories
             var topProducts = ctx.Bouquet_Info
                 .Where(b => !topProductIds.Contains(b.bouquet_id))
                 .OrderByDescending(b => b.sold)
@@ -133,7 +128,6 @@ namespace JavaFlorist.Repositories.Implementation
 
             if (paging)
             {
-                // here we will apply paging
                 int pageSize = 20;
                 int count = list.Count;
                 int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
@@ -179,7 +173,7 @@ namespace JavaFlorist.Repositories.Implementation
         public List<Bouquet_Info> Search(string searchTerm)
         {
             var suggestions = ctx.Bouquet_Info
-                .Where(b => b.name.Contains(searchTerm) || b.category.Contains(searchTerm)) // Tìm kiếm theo tên hoặc category
+                .Where(b => b.name.Contains(searchTerm) || b.category.Contains(searchTerm)) 
                 .ToList();
 
             return suggestions;

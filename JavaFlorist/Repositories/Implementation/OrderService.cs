@@ -59,7 +59,7 @@ namespace JavaFlorist.Repositories.Implementation
 						message = model.Occasion.message,
 
 					},
-					discount_id = model.discount_id,
+					
 
 					Cart = new Cart
 					{
@@ -67,6 +67,10 @@ namespace JavaFlorist.Repositories.Implementation
 					}
 
 				};
+				if(model.discount_id  != 0)
+				{
+					Order.discount_id = model.discount_id;
+				}
 				ctx.Order.Add(Order);
 				ctx.SaveChanges();
 				return true;

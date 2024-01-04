@@ -15,14 +15,14 @@ namespace JavaFlorist.Models.Domain
         public string? bouquetImage { get; set; }  
 
         [Required]
-        public int price { get; set; }
+        public decimal price { get; set; }
 
 
         public int sold { get; set; }
 
 
         [Required]
-        public int quantity { get; set; }
+        public string description { get; set; }
 
         [Required]
         public string? category { get; set; }
@@ -31,3 +31,4 @@ namespace JavaFlorist.Models.Domain
         public IFormFile? ImageFile { get; set; }
     }
 }
+ 

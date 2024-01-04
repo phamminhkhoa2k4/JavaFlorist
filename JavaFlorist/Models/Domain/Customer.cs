@@ -17,7 +17,7 @@ namespace JavaFlorist.Models.Domain
         [StringLength(1)]
         public string? Gender { get; set; }
 
-        public int P_no { get; set; }
+        public long P_no { get; set; }
 
         public string? Address { get; set; }
     }

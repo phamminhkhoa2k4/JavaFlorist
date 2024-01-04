@@ -36,6 +36,9 @@ namespace JavaFlorist.Models.Domain
                 .HasOne(w => w.Bouquet_Info) // Định nghĩa mối quan hệ giữa Wishlist và Bouquet_Info
                 .WithMany() // Tùy thuộc vào thiết lập quan hệ ở mô hình dữ liệu của bạn
                 .HasForeignKey(w => w.bouquet_id); // Định nghĩa khóa ngoại
+            modelBuilder.Entity<Bouquet_Info>()
+                .Property(b => b.price)
+                .HasColumnType("decimal(18,2)");
             modelBuilder.Entity<ApplicationUser>()
                 .HasOne(u => u.Customer)
                 .WithOne()
@@ -68,9 +71,12 @@ namespace JavaFlorist.Models.Domain
 				.HasOne(c => c.Bouquet)
 				.WithMany() 
 				.HasForeignKey(c => c.bouquet_id);
+            modelBuilder.Entity<CartItem>()
+                .Property(c => c.SubTotal)
+                .HasColumnType("decimal(18,2)");
 
 
-			base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
         }
 
     }

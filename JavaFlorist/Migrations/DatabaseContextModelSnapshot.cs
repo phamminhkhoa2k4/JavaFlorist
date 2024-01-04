@@ -139,15 +139,16 @@ namespace JavaFlorist.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("price")
-                        .HasColumnType("int");
-
-                    b.Property<int>("quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("price")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("sold")
                         .HasColumnType("int");
@@ -184,8 +185,8 @@ namespace JavaFlorist.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<int>("SubTotal")
-                        .HasColumnType("int");
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("bouquet_id")
                         .HasColumnType("int");
@@ -259,8 +260,8 @@ namespace JavaFlorist.Migrations
                     b.Property<string>("L_name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("P_no")
-                        .HasColumnType("int");
+                    b.Property<long>("P_no")
+                        .HasColumnType("bigint");
 
                     b.HasKey("cust_id");
 
@@ -276,16 +277,18 @@ namespace JavaFlorist.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("delivery_id"), 1L, 1);
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Phone")
-                        .HasColumnType("int");
+                    b.Property<long>("Phone")
+                        .HasColumnType("bigint");
 
                     b.HasKey("delivery_id");
 
@@ -358,7 +361,7 @@ namespace JavaFlorist.Migrations
                     b.Property<int>("delivery_id")
                         .HasColumnType("int");
 
-                    b.Property<int>("discount_id")
+                    b.Property<int?>("discount_id")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("order_date")
@@ -587,9 +590,7 @@ namespace JavaFlorist.Migrations
 
                     b.HasOne("JavaFlorist.Models.Domain.Discount", "Discount")
                         .WithMany()
-                        .HasForeignKey("discount_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("discount_id");
 
                     b.Navigation("Cart");
 

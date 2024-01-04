@@ -86,6 +86,25 @@ namespace JavaFlorist.Controllers
             //    return View(model);
 
 
+            DateTime currentTime = DateTime.Now;
+
+            TimeSpan startOfWorkingHours = new TimeSpan(9, 0, 0);
+            TimeSpan endOfWorkingHours = new TimeSpan(21, 0, 0); 
+
+            bool isWithinWorkingHours = currentTime.TimeOfDay >= startOfWorkingHours && currentTime.TimeOfDay <= endOfWorkingHours;
+
+            DateTime orderTime =  DateTime.Now; 
+
+            TimeSpan timeElapsedSinceOrder = currentTime - orderTime;
+
+            if (timeElapsedSinceOrder.TotalHours <= 5 && isWithinWorkingHours)
+            {
+                model.Delivery_Info.Date = currentTime.Date; 
+            }
+            else
+            {
+                model.Delivery_Info.Date = currentTime.Date.AddDays(1); 
+            }
 
             var result = _orderService.Add(model);
             if (result)
