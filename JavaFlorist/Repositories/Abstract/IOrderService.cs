@@ -6,5 +6,7 @@ namespace JavaFlorist.Repositories.Abstract
 	{
 		bool Add(Order model);
         IEnumerable<Order> GetAllOrders();
+
+        Order GetOrderById(int orderId);
     }
 }

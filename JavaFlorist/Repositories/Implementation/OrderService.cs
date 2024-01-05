@@ -91,5 +91,29 @@ namespace JavaFlorist.Repositories.Implementation
             .ToList();
 			return data;
         }
+
+
+        public Order GetOrderById(int orderId)
+        {
+
+            var orderWithDetails = ctx.Order
+ .Include(o => o.Customer)
+ .Include(o => o.Discount)
+ .Include(o => o.Delivery_Info)
+ .Include(o => o.Occasion)
+ .Include(o => o.Cart)
+     .ThenInclude(cart => cart.Items)
+     .ThenInclude(item => item.Bouquet)
+ .FirstOrDefault(o => o.order_id == orderId);
+
+            return orderWithDetails;
+
+
+         
+         
+        }
+
+
+
     }
 }

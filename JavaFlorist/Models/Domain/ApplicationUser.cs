@@ -12,6 +12,6 @@ namespace JavaFlorist.Models.Domain
 
         public Customer Customer { get; set; } // Navigation property
 
-
+        
     }
 }

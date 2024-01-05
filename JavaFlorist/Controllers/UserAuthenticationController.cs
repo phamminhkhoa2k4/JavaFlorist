@@ -17,7 +17,7 @@ namespace JavaFlorist.Controllers
         }
 
 
-        public async Task<IActionResult> Register()
+        public IActionResult Register()
         {
             return View();
         }
@@ -27,7 +27,7 @@ namespace JavaFlorist.Controllers
         {
             if (!ModelState.IsValid)
                 return View(model);
-            model.Role = "Admin";
+            model.Role = "User";
 
             var result = await authService.RegisterAsync(model);
             if(result.StatusCode == 1)
@@ -44,7 +44,7 @@ namespace JavaFlorist.Controllers
             return Redirect("/Home/Index");
         }
 
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
             return View();
         }

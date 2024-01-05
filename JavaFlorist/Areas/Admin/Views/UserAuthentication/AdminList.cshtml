@@ -14,6 +14,7 @@
             <div class="card w-100">
                 <div class="card-body p-4" style="margin-top:80px;">
                     <h5 class="card-title fw-semibold mb-4">Recent Transactions</h5>
+                    <a href="/Admin/UserAuthentication/Add" class="btn btn-primary">Add</a>
                     <div class="table-responsive">
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
@@ -51,7 +52,7 @@
                                             <p class="mb-0 fw-normal">@user.Email</p>
                                         </td>
                                         <td class="border-bottom-0">
-                                            <a  onclick="return window.confirm('Are you want delete discount have name @user.UserName')"   href="/UserAuthentication/Delete?UserId=@user.Id" class="btn btn-danger">Delete</a>
+                                            <a  onclick="return window.confirm('Are you want delete discount have name @user.UserName')"   href="/Admin/UserAuthentication/Delete?UserId=@user.Id" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 }

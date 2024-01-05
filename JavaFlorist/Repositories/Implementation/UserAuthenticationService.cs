@@ -175,7 +175,7 @@ namespace JavaFlorist.Repositories.Implementation
                 status.StatusCode = 2; // Đánh dấu cập nhật không thành công
                 return status;
             }
-            status.StatusCode = 0; // Hoặc giá trị khác để chỉ ra thành công
+            status.StatusCode = 0; 
             status.Message = "Updated Successfull ! =))";
 
             return status;
@@ -215,6 +215,61 @@ namespace JavaFlorist.Repositories.Implementation
 
             var result = await userManager.DeleteAsync(userToDelete);
             return result.Succeeded;
+        }
+
+        public async Task<Status> AddUserAdmin(RegistrationModel model)
+        {
+            var status = new Status();
+            var userExists = await userManager.FindByNameAsync(model.Username);
+            if (userExists != null)
+            {
+                status.StatusCode = 1;
+                status.Message = "User already exist";
+                return status;
+            }
+            ApplicationUser user = new ApplicationUser()
+            {
+                Email = model.Email,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                UserName = model.Username,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                ProfilePicture = model.ProfilePicture,
+                Customer = new Customer
+                {
+                    F_name = "",
+                    L_name = "",
+                    Dob = DateTime.Now,
+                    Gender = "",
+                    P_no = 0,
+                    Address = "",
+                }
+
+            };
+            var result = await userManager.CreateAsync(user, model.Password);
+            if (!result.Succeeded)
+            {
+                status.StatusCode = 2;
+                status.Message = "User creation failed";
+                return status;
+            }
+
+            if (!await roleManager.RoleExistsAsync(model.Role))
+                await roleManager.CreateAsync(new IdentityRole(model.Role));
+
+
+            if (await roleManager.RoleExistsAsync(model.Role))
+            {
+                await userManager.AddToRoleAsync(user, model.Role);
+            }
+
+            // Đăng nhập người dùng mới đăng ký thành công
+            await signInManager.SignInAsync(user, isPersistent: false);
+
+
+            status.StatusCode = 0;
+            status.Message = "You have registered successfully";
+            return status;
         }
         //public async task<status> changepasswordasync(changepasswordmodel model, string username)
         //{

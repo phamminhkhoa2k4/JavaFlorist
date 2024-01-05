@@ -1,4 +1,5 @@
-﻿using JavaFlorist.Repositories.Abstract;
+﻿using JavaFlorist.Models.Domain;
+using JavaFlorist.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
@@ -20,6 +21,19 @@ namespace JavaFlorist.Areas.Admin.Controllers
             return View(orders);
         }
 
+
+        [Area("Admin")]
+        public IActionResult OrderDetail(int orderId= 8)
+        {
+            var order = _orderService.GetOrderById(orderId);
+            if (order == null)
+            {
+                return NotFound(); 
+            }
+            return View(order); 
+        }
+
+      
     }
 
 }

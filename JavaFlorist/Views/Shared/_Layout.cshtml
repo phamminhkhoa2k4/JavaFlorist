@@ -839,9 +839,20 @@
         }
 
         function removeImage() {
-            // Set the preview image source back to the default image
-            document.getElementById('preview').src = "/Uploads/@avatar";
+            var defaultAvatar = "/img/Avatar-Default.jpg"; // Replace with your default image URL
 
+            // Check if the avatar variable is null or empty
+            var avatar = "@avatar"; // Assuming this is your variable holding the avatar URL
+            if (!avatar || avatar.trim() === "") {
+                // If the avatar is null or empty, set the preview to the default image
+                document.getElementById('preview').src = defaultAvatar;
+            } else {
+                // If the avatar is not null, set the preview to the specified avatar
+                document.getElementById('preview').src ='/Uploads/' + avatar;
+            }
+
+      
+            
             // Reset the file input field to clear the selected file
             document.getElementById('fileInput').value = null;
         }

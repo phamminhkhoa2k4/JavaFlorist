@@ -19,6 +19,9 @@ namespace JavaFlorist.Repositories.Abstract
 
         Task<bool> DeleteUser(string userId);
 
+
+        Task<Status> AddUserAdmin(RegistrationModel model);
+
         //Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username);
     }
 }
