@@ -19,11 +19,20 @@ namespace JavaFlorist.Controllers
             var data = _discountService.GetDiscountByCode(code);
             if (data != null)
             {
-                int des = data.decrease;
-                int id = data.discount_id;
-                return Json(new { discount = des , discount_id = id }); // Trả về dữ liệu giảm giá dưới dạng JSON
+                if(data.count > 0)
+                {
+                    int des = data.decrease;
+                    int id = data.discount_id;
+                    return Json(new { discount = des, discount_id = id }); 
+                }
+                else
+                {
+                    TempData["discountMsg"] = "Dícount over";
+                    return Json(new { discount = 0 });
+                }
+               
             }
-            return Json(new { discount = 0 }); // Trả về giảm giá là 0 nếu không tìm thấy mã
+            return Json(new { discount = 0 }); 
         }
 
     }

@@ -3,6 +3,7 @@ using JavaFlorist.Models.Domain;
 using JavaFlorist.Models.DTO;
 using JavaFlorist.Repositories.Abstract;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace JavaFlorist.Repositories.Implementation
 {
@@ -52,6 +53,7 @@ namespace JavaFlorist.Repositories.Implementation
 						Address = model.Delivery_Info.Address,
 						Date = model.Delivery_Info.Date,
 						Phone = model.Delivery_Info.Phone,
+						Delivery_status = ""
 					},
 					Occasion = new Occasion
 					{
@@ -73,6 +75,9 @@ namespace JavaFlorist.Repositories.Implementation
 				}
 				ctx.Order.Add(Order);
 				ctx.SaveChanges();
+
+              
+                
 				return true;
 			}catch (Exception ex)
 			{
@@ -97,23 +102,90 @@ namespace JavaFlorist.Repositories.Implementation
         {
 
             var orderWithDetails = ctx.Order
- .Include(o => o.Customer)
- .Include(o => o.Discount)
- .Include(o => o.Delivery_Info)
- .Include(o => o.Occasion)
- .Include(o => o.Cart)
-     .ThenInclude(cart => cart.Items)
-     .ThenInclude(item => item.Bouquet)
- .FirstOrDefault(o => o.order_id == orderId);
+				.Include(o => o.Customer)
+				.Include(o => o.Discount)
+				.Include(o => o.Delivery_Info)
+				.Include(o => o.Occasion)
+				.Include(o => o.Cart)
+					.ThenInclude(cart => cart.Items)
+					.ThenInclude(item => item.Bouquet)
+				.FirstOrDefault(o => o.order_id == orderId);
 
             return orderWithDetails;
-
-
-         
-         
         }
 
 
+        public IEnumerable<Order> GetAllOrdersByCustomerId(int customerId)
+        {
+            var data = ctx.Order
+           .Include(o => o.Customer)
+           .Include(o => o.Discount)
+           .Include(o => o.Delivery_Info)
+           .Include(o => o.Cart)
+               .ThenInclude(cart => cart.Items) // Include CartItems within Cart
+                   .ThenInclude(item => item.Bouquet) // Include Bouquet within CartItem
+           .Include(o => o.Occasion)
+           .Where(o => o.cust_id == customerId) // Filter by cust_id
+           .ToList();
 
+            return data;
+        }
+
+        public bool UpdateStatus(int orderId, string status)
+        {
+            try
+            {
+                var order = ctx.Order
+                 .Include(o => o.Customer)
+                 .Include(o => o.Discount)
+                 .Include(o => o.Delivery_Info)
+                 .Include(o => o.Occasion)
+                 .Include(o => o.Cart)
+                     .ThenInclude(cart => cart.Items)
+                     .ThenInclude(item => item.Bouquet)
+                 .FirstOrDefault(o => o.order_id == orderId);
+
+
+                if (order != null)
+                {
+                  
+                    order.Delivery_Info.Delivery_status = status;
+
+                    ctx.Order.Update(order);
+                    ctx.SaveChanges();
+                    return true;
+                }
+
+                return false; 
+            }
+            catch (Exception ex)
+            {
+
+                return false;
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            try
+            {
+                var orderToDelete = ctx.Order.FirstOrDefault(o => o.order_id == id);
+
+                if (orderToDelete != null)
+                {
+                    ctx.Order.Remove(orderToDelete);
+                    ctx.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false; // Không tìm thấy đơn hàng cần xóa
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

@@ -96,7 +96,9 @@
 								<label for="">Coupon code</label>
 								<input type="text" name="code" class="form-control text-left px-3" placeholder="">
 							</div>
-
+							<div class="alert alert-warning" role="alert">
+								@TempData["discountMsg"]
+							</div>
 						</div>
 						<p><button type="submit" class="btn btn-primary py-3 px-4">Apply Coupon</button></p>
 					</form>

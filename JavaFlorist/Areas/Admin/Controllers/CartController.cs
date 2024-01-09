@@ -23,7 +23,7 @@ namespace JavaFlorist.Areas.Admin.Controllers
 
 
         [Area("Admin")]
-        public IActionResult OrderDetail(int orderId= 8)
+        public IActionResult OrderDetail(int orderId)
         {
             var order = _orderService.GetOrderById(orderId);
             if (order == null)
@@ -33,7 +33,41 @@ namespace JavaFlorist.Areas.Admin.Controllers
             return View(order); 
         }
 
-      
+        [Area("Admin")]
+        public IActionResult UpdateStatusDelivery(int orderId , string status)
+        {
+            if(status == "Confirm" || status == "Delivery" || status == "Delivered" || status == "Received")
+            {
+                var result = _orderService.UpdateStatus(orderId ,status);
+                if (result)
+                {
+                    return Redirect(Request.Headers["referer"].ToString());
+                }
+                else
+                {
+                    return Redirect(Request.Headers["referer"].ToString());
+                }
+
+            }
+
+            return Redirect(Request.Headers["referer"].ToString());
+        }
+
+
+        [Area("Admin")]
+        public IActionResult DeleteOrder(int orderId) {
+           var result =  _orderService.Delete(orderId);
+            if (result)
+            {
+                return Redirect(Request.Headers["referer"].ToString());
+            }
+            else
+            {
+                return View();      
+            }
+
+        }
+
     }
 
 }

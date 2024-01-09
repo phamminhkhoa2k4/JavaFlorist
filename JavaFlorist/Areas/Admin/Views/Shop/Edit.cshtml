@@ -7,9 +7,9 @@
 <div class="container-fluid">
     <div class="container-fluid">
         <div class="card">
-            <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Forms</h5>
-                <div class="card mt-5">
+            <div class="card-body mt-3">
+                <h5 class="card-title fw-semibold mb-4 mt-5">Edit Bouquet</h5>
+                <div class="card">
                     <div class="card-body">
                         <form class="w-40" method="post" asp-action="Edit" asp-controller="Shop" style="background-color:#ffffff;border-radius:5px;padding:24px" enctype="multipart/form-data">
                             <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -19,7 +19,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="name">Name</label>
-                                        <input type="text" asp-for="name" value="@Model.name" name="name" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                        <input type="text" asp-for="name" value="@Model.name" name="name" placeholder="Please enter bouquet name !" class="form-control" style="border: 1px solid #e8e8e8;" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="name"> </span>
@@ -28,7 +28,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="ImageFile">Thumnail</label>
-                                        <input type="file" asp-for="ImageFile" name="ImageFile" class="form-control" style="border: 1px solid #e8e8e8;"  />
+                                        <input type="file" asp-for="ImageFile" name="ImageFile" placeholder="Please choose bouquet Thumnail !" class="form-control" style="border: 1px solid #e8e8e8;" />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="ImageFile"> </span>
@@ -40,32 +40,29 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="price">Price</label>
-                                        <input type="number" class="form-control" value="@Model.price" name="price" asp-for="price" required />
+                                        <input type="number" class="form-control" placeholder="Please enter bouquet price !" value="@Model.price" name="price" asp-for="price" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="price"></span>
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <<div class="form-outline">
-                                        <label class="form-label" asp-for="description">Quantity</label>
-                                        <input type="text" asp-for="description" value="@Model.description" name="description" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                    <div class="form-outline ">
+                                        <label class="form-label" asp-for="category">Category</label>
+                                        <input type="text" asp-for="category" placeholder="Please enter bouquet category !" value="@Model.category" name="category" class="form-control" style="border: 1px solid #e8e8e8;" required />
                                     </div>
-                                    <div class="message-box pd-x-28 error">
-                                        <span asp-validation-for="description"> </span>
+                                    <div class="message-box pd-x-28 error ">
+                                        <span asp-validation-for="category"> </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Message input -->
-                            <div class="form-outline ">
-                                <label class="form-label" asp-for="category">Category</label>
-                                <select class="form-select" asp-for="category" value="@Model.category" required>
-                                    <option value="rose">Rose</option>
-                                </select>
+                            <div class="form-outline">
+                                <label class="form-label" asp-for="description">Description</label>
+                                <textarea asp-for="description" placeholder="Please enter bouquet description !" value="@Model.description" name="description" class="form-control" style="border: 1px solid #e8e8e8;" cols="5"></textarea>
                             </div>
-                            <div class="message-box pd-x-28 error ">
-                                <span asp-validation-for="category"> </span>
+                            <div class="message-box pd-x-28 error">
+                                <span asp-validation-for="description"></span>
                             </div>
                             @if (TempData["msg"] != null)
                             {

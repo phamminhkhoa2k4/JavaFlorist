@@ -9,5 +9,6 @@ namespace JavaFlorist.Repositories.Abstract
         bool Delete(int id);
         IQueryable<Discount> List();
         Discount GetDiscountByCode(string code);
+        bool Decrease(int id);
     }
 }

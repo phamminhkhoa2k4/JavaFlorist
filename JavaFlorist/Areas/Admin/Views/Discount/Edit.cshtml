@@ -7,9 +7,9 @@
 <div class="container-fluid">
     <div class="container-fluid">
         <div class="card">
-            <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Forms</h5>
-                <div class="card mt-5">
+            <div class="card-body mt-3">
+                <h5 class="card-title fw-semibold mb-4 mt-5">Edit Discount</h5>
+                <div class="card">
                     <div class="card-body">
                         <form class="w-40" method="post" asp-action="Edit" style="background-color:#ffffff;border-radius:5px;padding:24px" enctype="multipart/form-data">
                             <!-- 2 column grid layout with text inputs for the first and last names -->
@@ -18,7 +18,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="code">Code</label>
-                                        <input type="text" asp-for="code" name="code" value="@Model.code" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                        <input type="text" placeholder="Please Enter Code !" asp-for="code" name="code" value="@Model.code" class="form-control" style="border: 1px solid #e8e8e8;" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="code"></span>
@@ -27,7 +27,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="descrease">Decrease</label>
-                                        <input type="number" asp-for="descrease" name="descrease" value="@Model.decrease" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                        <input type="number" asp-for="descrease" placeholder="PLease Enter Descrease !" name="descrease" value="@Model.decrease" class="form-control" style="border: 1px solid #e8e8e8;" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="descrease"> </span>
@@ -36,7 +36,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="count">Count</label>
-                                        <input type="number" class="form-control" name="count"  value="@Model.count" asp-for="count" required />
+                                        <input type="number" class="form-control" name="count" placeholder="Please Enter Count !" value="@Model.count" asp-for="count" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="count"></span>

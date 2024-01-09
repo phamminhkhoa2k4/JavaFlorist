@@ -36,8 +36,8 @@ namespace JavaFlorist.Controllers
             if (result)
             {
                 TempData["msg"] = "Added Successfully";
-                string url = $"/Wishlist/Wishlist?id={cust_id}";
-                return Redirect(url);
+                //string url = $"/Wishlist/Wishlist?id={cust_id}";
+                return Redirect(Request.Headers["referer"].ToString());
             }
             else
             {

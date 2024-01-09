@@ -16,14 +16,17 @@ namespace JavaFlorist.Controllers
         private readonly IBouquetService _bouquetService;
         private readonly IOccassionService _occasionService;
         private readonly IOrderService _orderService;
+        private readonly IDiscountService _discountService;
 
 
-		public CartController(ICartService cartService, IBouquetService bouquetService, IOccassionService occasionService , IOrderService orderService)
+        public CartController(ICartService cartService, IBouquetService bouquetService, IOccassionService occasionService , IOrderService orderService , IDiscountService discountService 
+  )
 		{
 			_cartService = cartService;
 			_bouquetService = bouquetService;
 			_occasionService = occasionService;
             _orderService = orderService;
+            _discountService = discountService;
 		}
 
 		
@@ -43,8 +46,19 @@ namespace JavaFlorist.Controllers
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
+        [HttpPost]
+		public IActionResult AddToCartd(int bouquetId, int cust_id, int quantity = 1)
+		{
+			var bouquet = _bouquetService.GetById(bouquetId);
+			if (bouquet != null)
+			{
+				_cartService.AddItemToCart(bouquet, quantity, cust_id);
+			}
+			return Redirect(Request.Headers["Referer"].ToString());
+		}
 
-        public IActionResult RemoveFromCart(int bouquetId, int cust_id)
+
+		public IActionResult RemoveFromCart(int bouquetId, int cust_id)
         {
             var bouquet = _bouquetService.GetById(bouquetId); 
             if (bouquet != null)
@@ -110,7 +124,8 @@ namespace JavaFlorist.Controllers
             if (result)
             {
                 _cartService.ClearCart(model.cust_id);
-
+                var isSuccess = _discountService.Decrease((int)model.discount_id);
+                
 			}
 			else
             {
@@ -122,7 +137,42 @@ namespace JavaFlorist.Controllers
 		}
 
 
+        public IActionResult MyOrder(int cust_id)
+        {   
+            var data = _orderService.GetAllOrdersByCustomerId(cust_id);
+            return View(data);
+        }
 
-	}
+        public IActionResult OrderDetail(int OrderId)
+        {
+            var order = _orderService.GetOrderById(OrderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
+            return View(order);
+        }
+
+
+        public IActionResult UpdateStatusDelivery(int orderId, string status)
+        {
+            if (status == "Received")
+            {
+                var result = _orderService.UpdateStatus(orderId, status);
+                if (result)
+                {
+                    return Redirect(Request.Headers["referer"].ToString());
+                }
+                else
+                {
+                    return Redirect(Request.Headers["referer"].ToString());
+                }
+
+            }
+
+            return Redirect(Request.Headers["referer"].ToString());
+        }
+
+    }
 
 }

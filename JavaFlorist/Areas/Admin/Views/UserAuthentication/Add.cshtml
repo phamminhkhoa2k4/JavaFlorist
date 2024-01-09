@@ -7,17 +7,17 @@
 <div class="container-fluid">
     <div class="container-fluid">
         <div class="card">
-            <div class="card-body">
-                <h5 class="card-title fw-semibold mb-4">Forms</h5>
-                <div class="card mt-5">
+            <div class="card-body mt-3">
+                <h5 class="card-title fw-semibold mb-4 mt-5">Add Admin</h5>
+                <div class="card">
                     <div class="card-body">
                         <form class="w-40" method="post" asp-action="Add" asp-controller="UserAuthentication" style="background-color:#ffffff;border-radius:5px;padding:24px" enctype="multipart/form-data">
                             <!-- 2 column grid layout with text inputs for the first and last names -->
                             <div class="row mb-4">
                                 <div class="col">
                                     <div class="form-outline">
-                                        <label class="form-label" asp-for=" Username">Name</label>
-                                        <input type="text" asp-for="Username" name="Username" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                        <label class="form-label" asp-for=" Username">Username</label>
+                                        <input type="text" asp-for="Username" name="Username" placeholder="Please Enter Username !" class="form-control" style="border: 1px solid #e8e8e8;" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="name"> </span>
@@ -36,7 +36,7 @@
                             <div class="row mb-4">
                                 <div class="form-outline ">
                                     <label class="form-label" asp-for="Email">Email</label>
-                                    <input type="text" asp-for="Email" name="Email" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                    <input type="text" asp-for="Email" name="Email" placeholder="Please Enter Email ! " class="form-control" style="border: 1px solid #e8e8e8;" required />
                                 </div>
                                 <div class="message-box pd-x-28 error ">
                                     <span asp-validation-for="Email"> </span>
@@ -48,7 +48,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="Password">Password</label>
-                                        <input type="text" class="form-control" name="Password" asp-for="Password" required />
+                                        <input type="text" class="form-control" placeholder="Please Enter Password !" name="Password" asp-for="Password" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="Password"></span>
@@ -57,7 +57,7 @@
                                 <div class="col">
                                     <div class="form-outline">
                                         <label class="form-label" asp-for="PasswordConfirm">PasswordConfirm</label>
-                                        <input type="text" asp-for="PasswordConfirm" name="PasswordConfirm" class="form-control" style="border: 1px solid #e8e8e8;" required />
+                                        <input type="text" asp-for="PasswordConfirm" name="PasswordConfirm" placeholder="Please Enter Confirm Password !" class="form-control" style="border: 1px solid #e8e8e8;" required />
                                     </div>
                                     <div class="message-box pd-x-28 error">
                                         <span asp-validation-for="PasswordConfirm"> </span>

@@ -71,5 +71,22 @@ namespace JavaFlorist.Repositories.Implementation
                 return false;
             }
         }
+
+
+        public bool Decrease(int id)
+        {
+            try
+            {
+                var data = this.GetById(id);
+
+                data.count--;
+                ctx.Discount.Update(data);
+                ctx.SaveChanges();
+                return true;
+            }catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

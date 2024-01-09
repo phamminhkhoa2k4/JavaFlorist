@@ -22,6 +22,8 @@ namespace JavaFlorist.Models.Domain
         public DateTime Date { get; set; }
 
 
+        public string Delivery_status { get; set; }
+
 		
 
 

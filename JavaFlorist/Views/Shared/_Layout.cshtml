@@ -132,6 +132,10 @@
                                                     <i class="ti ti-list-check fs-6"></i>
                                                     <p class="mb-0 fs-3" data-toggle="modal" data-target="#myModal">My Profile</p>
                                                 </a>
+                                                <a href="/Cart/MyOrder?cust_id=@id" class="d-flex align-items-center gap-2 dropdown-item">
+                                                    <i class="ti ti-user fs-6"></i>
+                                                    <p class="mb-0 fs-3">My Order</p>
+                                                </a>
                                                 @{
                                                     if (User.IsInRole("Admin"))
                                                     {
@@ -267,7 +271,7 @@
                             <div id="timer" class="d-flex mt-5">
                                 <div class="time" id="days"></div>
                                 <div class="time pl-3" id="hours"></div>
-                                <div class="time pl-3" id="minutes"></div>
+                                <div class="time pl-3" id="minutes"></div> 
                                 <div class="time pl-3" id="seconds"></div>
                             </div>
                         </div>
@@ -295,25 +299,6 @@
                                 <div class="item">
                                     <div class="testimony-wrap p-4 pb-5">
                                         <div class="user-img mb-5"
-                                             style="background-image: url(/images/person_1.jpg)">
-                                            <span class="quote d-flex align-items-center justify-content-center">
-                                                <i class="icon-quote-left"></i>
-                                            </span>
-                                        </div>
-                                        <div class="text text-center">
-                                            <p class="mb-5 pl-4 line">
-                                                Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind
-                                                texts.
-                                            </p>
-                                            <p class="name">Garreth Smith</p>
-                                            <span class="position">Marketing Manager</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="testimony-wrap p-4 pb-5">
-                                        <div class="user-img mb-5"
                                              style="background-image: url(/images/person_2.jpg)">
                                             <span class="quote d-flex align-items-center justify-content-center">
                                                 <i class="icon-quote-left"></i>
@@ -325,8 +310,8 @@
                                                 countries Vokalia and Consonantia, there live the blind
                                                 texts.
                                             </p>
-                                            <p class="name">Garreth Smith</p>
-                                            <span class="position">Interface Designer</span>
+                                            <p class="name">Duong Gia Tan</p>
+                                            <span class="position">Member</span>
                                         </div>
                                     </div>
                                 </div>
@@ -344,15 +329,16 @@
                                                 countries Vokalia and Consonantia, there live the blind
                                                 texts.
                                             </p>
-                                            <p class="name">Garreth Smith</p>
-                                            <span class="position">UI Designer</span>
+                                            <p class="name">Pham Minh Khoa</p>
+                                            <span class="position">Leader</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div>1
+
                                 <div class="item">
                                     <div class="testimony-wrap p-4 pb-5">
                                         <div class="user-img mb-5"
-                                             style="background-image: url(/images/person_1.jpg)">
+                                             style="background-image: url(/images/person_3.jpg)">
                                             <span class="quote d-flex align-items-center justify-content-center">
                                                 <i class="icon-quote-left"></i>
                                             </span>
@@ -363,27 +349,8 @@
                                                 countries Vokalia and Consonantia, there live the blind
                                                 texts.
                                             </p>
-                                            <p class="name">Garreth Smith</p>
-                                            <span class="position">Web Developer</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="item">
-                                    <div class="testimony-wrap p-4 pb-5">
-                                        <div class="user-img mb-5"
-                                             style="background-image: url(/images/person_1.jpg)">
-                                            <span class="quote d-flex align-items-center justify-content-center">
-                                                <i class="icon-quote-left"></i>
-                                            </span>
-                                        </div>
-                                        <div class="text text-center">
-                                            <p class="mb-5 pl-4 line">
-                                                Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind
-                                                texts.
-                                            </p>
-                                            <p class="name">Garreth Smith</p>
-                                            <span class="position">System Analyst</span>
+                                            <p class="name">Huynh Chi Nguyen</p>
+                                            <span class="position">Member</span>
                                         </div>
                                     </div>
                                 </div>
@@ -400,34 +367,19 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-sm ftco-animate">
-                            <a href="#" class="partner">
-                                <img src="/images/partner-1.png"
-                                     class="img-fluid" />
-                            </a>
+                          
                         </div>
                         <div class="col-sm ftco-animate">
-                            <a href="#" class="partner">
-                                <img src="/images/partner-2.png"
-                                     class="img-fluid" />
-                            </a>
+                          
                         </div>
                         <div class="col-sm ftco-animate">
-                            <a href="#" class="partner">
-                                <img src="/images/partner-3.png"
-                                     class="img-fluid" />
-                            </a>
+                           
                         </div>
                         <div class="col-sm ftco-animate">
-                            <a href="#" class="partner">
-                                <img src="/images/partner-4.png"
-                                     class="img-fluid" />
-                            </a>
+                           
                         </div>
                         <div class="col-sm ftco-animate">
-                            <a href="#" class="partner">
-                                <img src="/images/partner-5.png"
-                                     class="img-fluid" />
-                            </a>
+                          
                         </div>
                     </div>
                 </div>
@@ -1006,11 +958,9 @@
 
                     
 
-                    // Update cart totals after applying the discount
                     const subtotal = parseFloat(document.querySelector('#subtotal').innerText.replace('$', ''));
                     const delivery = parseFloat(document.querySelector('#delivery').innerText.replace('$', ''));
                     if(subtotal != 0){
-                        // Update discount on the page
                         $('#discount').text('$' + discount.toFixed(2));
                         sessionStorage.setItem('discount', discount);
                         sessionStorage.setItem('discount_id', discount_id);
@@ -1022,7 +972,6 @@
                     }
                 },
                 error: function (error) {
-                    // Handle errors if necessary
                 }
             });
         });
@@ -1034,11 +983,9 @@
         window.addEventListener('beforeunload', function (event) {
             const currentLocation = window.location.href;
 
-            // Regular expressions to match URLs with the general structure
             const cartCheckoutRegex = /\/Cart\/Checkout\?cust_id=\d+/;
             const cartCartRegex = /\/Cart\/Cart\?cust_id=\d+/;
 
-            // Check if the current location matches the patterns for checkout or cart pages
             if (!(cartCheckoutRegex.test(currentLocation) || cartCartRegex.test(currentLocation))) {
                 sessionStorage.removeItem('discount');
                 sessionStorage.removeItem('discount_id');
@@ -1046,13 +993,45 @@
             }
         });
 
-
-     
-
-        
-
     </script>
 
+    <script>
+        $(document).ready(function () {
+            $('.quantity-right-plus').click(function (e) {
+                e.preventDefault();
+                var quantity = parseInt($('#quantity').val());
+                $('#quantity').val(quantity + 1);
+            });
+
+            $('.quantity-left-minus').click(function (e) {
+                e.preventDefault();
+                var quantity = parseInt($('#quantity').val());
+                if (quantity > 1) {
+                    $('#quantity').val(quantity - 1);
+                }
+            });
+
+
+            $('#addToCartBtn').click(function (e) {
+                e.preventDefault();
+                var quantityValue = $('#quantity').val();
+                var bouquetId = $(this).data('bouquet-id');
+                var customerId = '@id'; // Replace with actual value
+                $.ajax({
+                    url: '/Cart/AddToCart', // Endpoint cập nhật số lượng
+                    method: 'POST',
+                    data: { bouquetId: bouquetId, cust_id: customerId, quantity: quantityValue },
+                    success: function (response) {
+                        // Xử lý kết quả từ server nếu cần
+                    },
+                    error: function (error) {
+                        // Xử lý lỗi nếu có
+                    }
+                });
+            });
+        });
+    </script>
+ 
     <script src="~/js/main.js"></script>
 </body>
 </html>
