@@ -36,7 +36,17 @@ namespace JavaFlorist.Controllers
             return View(cart);
         }
 
-        public IActionResult AddToCart(int bouquetId, int cust_id , int quantity = 1 )
+
+		public IActionResult Count(int cust_id)
+		{
+			var cart = _cartService.GetCart(cust_id);
+			int itemCount = cart.Items.Count;
+			return Json(itemCount);
+		}
+
+
+
+		public IActionResult AddToCart(int bouquetId, int cust_id , int quantity = 1 )
         {
             var bouquet = _bouquetService.GetById(bouquetId); 
             if (bouquet != null)
@@ -95,9 +105,7 @@ namespace JavaFlorist.Controllers
 		[HttpPost]
 		public IActionResult Checkout(Order  model)
         {
-            model.OccasionList = _occasionService.List().Select(a => new SelectListItem { Text = a.Occasion_name, Value = a.Occasion_id.ToString() });
-            //if (!ModelState.IsValid)
-            //    return View(model);
+          
 
 
             DateTime currentTime = DateTime.Now;
@@ -124,7 +132,10 @@ namespace JavaFlorist.Controllers
             if (result)
             {
                 _cartService.ClearCart(model.cust_id);
-                var isSuccess = _discountService.Decrease((int)model.discount_id);
+                if (model.discount_id != null)
+                {
+					_discountService.Decrease((int)model.discount_id);
+				}
                 
 			}
 			else

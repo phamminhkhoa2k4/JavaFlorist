@@ -73,7 +73,21 @@ namespace JavaFlorist.Repositories.Implementation
 				{
 					Order.discount_id = model.discount_id;
 				}
-				ctx.Order.Add(Order);
+
+                foreach (var item in updatedCartItems)
+                {
+                    var bouquet = ctx.Bouquet_Info.Find(item.bouquet_id);
+                    if (bouquet != null)
+                    {
+                        // Update the sold count based on the quantity in the order
+                        bouquet.sold += item.Quantity;
+                        ctx.Bouquet_Info.Update(bouquet);
+                        ctx.SaveChanges();
+                    }
+                   
+                }
+
+                ctx.Order.Add(Order);
 				ctx.SaveChanges();
 
               
@@ -95,6 +109,22 @@ namespace JavaFlorist.Repositories.Implementation
             .Include(o => o.Occasion)
             .ToList();
 			return data;
+        }
+
+        public IEnumerable<decimal> GetAllTotalByReceivedStatus()
+        {
+            DateTime today = DateTime.Today;
+            DateTime startOfMonth = new DateTime(today.Year, today.Month, 1);
+            DateTime endOfMonth = startOfMonth.AddMonths(1).AddDays(-1);
+
+            var receivedOrdersTotal = ctx.Order
+                .Where(o => o.Delivery_Info.Delivery_status == "Received" &&
+                            o.order_date >= startOfMonth &&
+                            o.order_date <= endOfMonth)
+                .Select(o => (decimal)o.Total)
+                .ToList();
+
+            return receivedOrdersTotal;
         }
 
 
@@ -186,6 +216,31 @@ namespace JavaFlorist.Repositories.Implementation
             {
                 return false;
             }
+        }
+
+        public DashboardModel GetLatestOrder()
+        {
+            var latestOrders = ctx.Order
+           .Include(o => o.Customer)
+           .Include(o => o.Delivery_Info)
+         .Where(o => o.Delivery_Info.Delivery_status == "")
+         .OrderByDescending(o => o.order_date)
+         .Take(6)
+         .ToList();
+
+          var topSoldBouquets = ctx.Bouquet_Info
+        .OrderByDescending(b => b.sold)
+        .Take(4)
+        .ToList();
+
+
+            var data = new DashboardModel
+            {
+                order = latestOrders,
+                bouquets = topSoldBouquets
+            };
+
+            return data;
         }
     }
 }

@@ -23,12 +23,12 @@ namespace JavaFlorist.Controllers
                 {
                     int des = data.decrease;
                     int id = data.discount_id;
-                    return Json(new { discount = des, discount_id = id }); 
+                    return Json(new { discount = des, discount_id = id, message = "Apply Successfull !" }); 
                 }
                 else
                 {
-                    TempData["discountMsg"] = "Dícount over";
-                    return Json(new { discount = 0 });
+                    
+                    return Json(new { discount = 0  , message = "Discount Over!"});
                 }
                
             }
