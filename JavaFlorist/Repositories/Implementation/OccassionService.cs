@@ -55,12 +55,23 @@ namespace JavaFlorist.Repositories.Implementation
 
         public IQueryable<Occasion> List()
         {
-            var data = ctx.Occassion.AsQueryable();
+            var data = ctx.Occassion.Where(o => (bool)o.IsPattern).AsQueryable();
             return data;
 
         }
 
-        public bool Update(Occasion model)
+
+		public IQueryable<Occasion> SubList(string occasionName)
+		{
+			var data = ctx.Occassion
+		    .Where(o => (bool)o.IsPattern && o.Occasion_name == occasionName).AsQueryable();
+
+			return data;
+
+		}
+
+
+		public bool Update(Occasion model)
         {
             try
             {

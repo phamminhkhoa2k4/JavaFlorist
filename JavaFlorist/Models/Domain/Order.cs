@@ -40,7 +40,14 @@ namespace JavaFlorist.Models.Domain
 		public IEnumerable<SelectListItem>? OccasionList { get; set; }
 
 		[NotMapped]
+		public IEnumerable<SelectListItem>? OccasionListMess { get; set; }
+
+		[NotMapped]
 		public MultiSelectList? MultiOccasionList { get; set; }
+
+
+		[NotMapped]
+		public MultiSelectList? MultiOccasionListMess { get; set; }
 
 		[NotMapped]
 		public Cart cart { get; set; }

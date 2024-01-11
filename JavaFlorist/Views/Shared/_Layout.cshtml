@@ -77,6 +77,7 @@
     <link rel="stylesheet" href="~/css/icomoon.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 </head>
 <body >
 
@@ -186,14 +187,7 @@
                     </li>
                     <li class="has-children  @(ViewBag.Index == 2 ? "active" : "")">
                         <a href="/Shop/Shop">Shop</a>
-                        <ul class="dropdown">
-                            <li><a href="/Shop/FilterByCategory?category=Birthday">Birthday</a></li>
-                            <li><a href="/Shop/FilterByCategory?category=Wedding">Wedding</a></li>
-                            <li><a href="/Shop/FilterByCategory?category=New baby">New baby</a></li>
-                            <li><a href="/Shop/FilterByCategory?category=Thank you">Thank you</a></li>
-                            <li><a href="/Shop/FilterByCategory?category=Father day">Father day</a></li>
-                            <li><a href="/Shop/FilterByCategory?category=Mother day">Mother day</a></li>
-                            <li><a href="/Shop/FilterByCategory?category=Lover">Lover</a></li>
+                        <ul id="dropcategory" class="dropdown">
                         </ul>
                     </li>
                     <li class=" @(ViewBag.Index == 3 ? "active" : "")"><a href="/Home/About">About</a></li>
@@ -830,7 +824,7 @@
 
 
         $('.quantity').on('input', function () {
-            var bouquetId = $(this).attr('id').split('_')[1]; // Lấy id của sản phẩm từ id của input
+            var bouquetId = $(this).attr('id').split('_')[1]; 
             var quantity = $(this).val(); // Lấy giá trị số lượng từ input
             var cust_id = @id;
 
@@ -861,9 +855,7 @@
                         // Redirect to the RemoveFromCart action
                         window.location.href = `/Cart/RemoveFromCart?bouquetId=${bouquetId}&cust_id=@id`;
                     } else {
-                        // Reset the quantity to 1 or any default value you prefer
                         this.value = 1;
-                        // Update the total in case the quantity was changed back to a positive value
                         totalElement.innerText = `$${price.toFixed(2)}`;
                     }
                 } else {
@@ -1012,9 +1004,7 @@
         });
     </script>
   <script>
-        // Assuming you're using jQuery for AJAX
         $(document).ready(function () {
-            // Fetch the cart count on page load
             updateCartCount();
         });
 
@@ -1024,7 +1014,7 @@
                 url: '/Cart/Count?cust_id=' + cust_id,
                 method: 'GET',
                 success: function (data) {
-                    $('#cartItemCount').text(data); // Update the count in the HTML
+                    $('#cartItemCount').text(data); 
                 },
                 error: function () {
                     console.log('Error fetching cart count.');
@@ -1033,6 +1023,132 @@
         }
 
 </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Shop/listCategory', 
+                type: 'GET',                    
+                dataType: 'json',               
+                success: function (data) {
+                    var categoryList = $('#categoryList');
+                    var dropCategory = $('#dropcategory');
+
+                    $.each(data, function (index, item) {
+                        var li = $('<li>');
+                        var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item);
+                        li.append(a);
+                        categoryList.append(li);
+                    });
+
+                    $.each(data, function (index, item) {
+                        var li = $('<li>');
+                        var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item);
+                        li.append(a);
+                        dropCategory.append(li);
+                    });
+
+                },
+                error: function (error) {           
+                    console.error(error);
+                }
+            });
+        });
+    </script>
+    <script>
+        var money = document.getElementById('money').innerHTML;
+        var currency = document.getElementById('currency').innerHTML;
+        paypal.Button.render({
+            env: 'sandbox',
+            client: {
+                sandbox: 'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+                production: 'EJjyEuoXxqK4IXz5bGiOriRIKqyj9MLihLbKTz401UAgJCHFtiYoSXB07mAfxszWNRxbbHaiwSfs4Dzq'
+            },
+
+            style: {
+                label: 'checkout', // checkout | credit | pay | buynow | generic
+                size: 'medium', // small | medium | large | responsive
+                shape: 'rect', // pill | rect
+                color: 'blue'       // gold | blue | silver | black
+            },
+
+            commit: true,
+
+            payment: function (data, actions) {
+
+                // Make a call to the REST api to create the payment
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: money, currency: currency }
+                            }
+                        ]
+                    }
+                });
+            },
+
+            // onAuthorize() is called when the buyer approves the payment
+            onAuthorize: function (data, actions) {
+
+                // Make a call to the REST api to execute the payment
+                return actions.payment.execute().then(function () {
+                    window.alert('Payment Complete!');
+                    window.location.href = "/InstrumentStores-war/faces/userLayout/succesPay.xhtml";
+                });
+            }
+
+        }, '#paypal-button');
+    </script>
+    <script>
+        function toggleCustomMessage(showCustomMessage) {
+            var occasionSelect = document.getElementById("occasionSelect");
+            var messageTextarea = document.querySelector("[asp-for='Occasion.message']");
+
+            if (showCustomMessage) {
+                occasionSelect.disabled = true;
+                messageTextarea.disabled = false;
+            } else {
+                occasionSelect.disabled = false;
+                messageTextarea.disabled = true;
+            }
+        }
+    </script>
+    <script>
+        $(document).ready(function () {
+            var occasionName = $('#occasionName');
+            var occasionMessage = $('#occasionMessage');
+
+            // Function to make the AJAX call
+            function updateOptions() {
+                var Oname = occasionName.val();
+
+                $.ajax({
+                    url: '/Cart/MessagePattern?occasionName=' + Oname,
+                    type: 'GET',
+                    success: function (data) {
+                        // Clear existing options before adding new ones
+                        occasionMessage.empty();
+
+                        $.each(data, function (index, item) {
+                            occasionMessage.append($('<option></option>').attr('value', item).text(item));
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            // Initial call when the page loads
+            updateOptions();
+
+            // Call updateOptions() every time the select changes
+            occasionName.on('change', updateOptions);
+        });
+    </script>
+
+
+
     <script src="~/js/main.js"></script>
 </body>
 </html>

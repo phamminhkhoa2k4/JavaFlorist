@@ -96,11 +96,18 @@ namespace JavaFlorist.Controllers
 		{
 
 			var model = new Order();
-			model.OccasionList = _occasionService.List().Select(a => new SelectListItem { Text = a.Occasion_name, Value = a.Occasion_id.ToString() });
-			model.cart = _cartService.GetCart(cust_id);
+			model.OccasionList = _occasionService.List()
+    .Select(a => new SelectListItem { Text = a.Occasion_name, Value = a.Occasion_name }).Distinct();
+            model.cart = _cartService.GetCart(cust_id);
 			return View(model);
 		}
 
+
+		public IActionResult MessagePattern(string occasionName)
+		{
+            var pattern = _occasionService.SubList(occasionName).Select(p => p.message).Distinct();
+            return Json(pattern);
+        }
 
 		[HttpPost]
 		public IActionResult Checkout(Order  model)
@@ -132,7 +139,7 @@ namespace JavaFlorist.Controllers
             if (result)
             {
                 _cartService.ClearCart(model.cust_id);
-                if (model.discount_id != null)
+                if (model.discount_id != null && model.discount_id != 0)
                 {
 					_discountService.Decrease((int)model.discount_id);
 				}
@@ -140,8 +147,8 @@ namespace JavaFlorist.Controllers
 			}
 			else
             {
-				return View(model);
-			}
+                return Redirect(Request.Headers["referer"].ToString());
+            }
 
 			return RedirectToAction("Cart", "Cart", new { cust_id = model.cust_id });
 

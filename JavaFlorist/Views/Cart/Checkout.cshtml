@@ -47,8 +47,8 @@
 
 										<td class="product-name">
 											<h3>@item.Bouquet.name</h3>
-											<p>Far far away, behind the word mountains, far from the countries</p>
-											<p>@item.SubTotal</p>
+											<p>@item.Bouquet.description</p>
+											
 
 										</td>
 										@{
@@ -95,26 +95,43 @@
 						<div class="w-100"></div>
 						<div class="col-md-12">
 							<div class="form-group">
-								<label for="country">Occasion</label>
+								<label >Occasion</label>
 								<div class="select-wrap">
 									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
-									<select asp-for="Occasion.Occasion_name" class="form-control">
-										<option value="Birthday">Birthday</option>
-										<option value="Wedding">Wedding</option>
-										<option value="New Baby">New Baby</option>
-										<option value="Thank You">Thank You</option>
-										<option value="Father Day">Father Day</option>
-										<option value="Mother Day">Mother Day</option>
-										<option value="Lover">Lover</option>
+									<select asp-items="Model.OccasionList" id="occasionName" asp-for="Occasion.Occasion_name" class="form-control">
+									
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Choose:</label>
+								<div>
+									<label>
+										<input type="radio" name="occasionType" value="select" onclick="showSelect()"> Select Occasion
+									</label>
+									<label>
+										<input type="radio" name="occasionType" value="custom" onclick="showTextarea()"> Custom Message
+									</label>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-12" id="selectDiv" style="display:none;">
+							<div class="form-group">
+								<label>Message</label>
+								<div class="select-wrap">
+									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
+									<select asp-for="Occasion.message" id="occasionMessage" class="form-control">
 									</select>
 								</div>
 							</div>
 						</div>
 						<div class="w-100"></div>
-						<div class="col-md-12">
+						<div class="col-md-12" id="customDiv" style="display:none;">
 							<div class="form-group">
-								<label for="country">Occasion</label>
-								<textarea class="form-control" asp-for="Occasion.message" rows="3"></textarea>
+								<label for="country">Message</label>
+								<textarea class="form-control" asp-for="Occasion.message" id="occasionMessageTextarea"></textarea>
 							</div>
 						</div>
 						<div class="w-100"></div>
@@ -154,36 +171,15 @@
 					</div>
 					<div class="col-md-12">
 						<div class="cart-detail p-3 p-md-4">
-							<h3 class="billing-heading mb-4">Payment Method</h3>
-							<div class="form-group">
-								<div class="col-md-12">
-									<div class="radio">
-										<label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
-									</div>
+								<button type="submit" id="paypal-button" class="w-100 mb-2">Pay with PayPal</button>
+
+								<div style="display: none;">
+									<div id="money">10.00</div> <!-- Replace with the actual amount -->
+									<div id="currency">USD</div> <!-- Replace with the actual currency code -->
 								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-12">
-									<div class="radio">
-										<label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-12">
-									<div class="radio">
-										<label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
-									</div>
-								</div>
-							</div>
-							<div class="form-group">
-								<div class="col-md-12">
-									<div class="checkbox">
-										<label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
-									</div>
-								</div>
-							</div>
-							<p><input type="submit" class="btn btn-primary py-3 px-4">Place an order</p>
+
+
+								<p><input type="submit" class="btn btn-primary py-3 px-4">place an order</p>
 						</div>
 					</div>
 				</div>
@@ -192,4 +188,20 @@
 
 		</div>
 	</div>
-</section> 
+</section>
+
+<script>
+	function showSelect() {
+		document.getElementById("selectDiv").style.display = "block";
+		document.getElementById("customDiv").style.display = "none";
+		document.getElementById('occasionMessageTextarea').removeAttribute('name');
+		document.getElementById('occasionMessage').setAttribute('name', 'Occasion.message');
+	}
+
+	function showTextarea() {
+		document.getElementById("selectDiv").style.display = "none";
+		document.getElementById("customDiv").style.display = "block";
+		document.getElementById('occasionMessage').removeAttribute('name');
+		document.getElementById('occasionMessageTextarea').setAttribute('name', 'Occasion.message');
+	}
+</script>

@@ -59,6 +59,7 @@ namespace JavaFlorist.Repositories.Implementation
 					{
 						Occasion_name = model.Occasion.Occasion_name,
 						message = model.Occasion.message,
+                        IsPattern = false
 
 					},
 					

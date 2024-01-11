@@ -1,6 +1,7 @@
 ﻿using JavaFlorist.Models.DTO;
 using JavaFlorist.Repositories.Abstract;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Policy;
 
 namespace JavaFlorist.Controllers
 {
@@ -52,8 +53,11 @@ namespace JavaFlorist.Controllers
         }
 
 
-     
-      
 
+        public IActionResult listCategory()
+        {
+            var category = _bouquetService.GetDistinctCategories();
+            return Json(category); 
+        }
     }
 }

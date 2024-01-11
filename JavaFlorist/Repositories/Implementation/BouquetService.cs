@@ -59,6 +59,13 @@ namespace JavaFlorist.Repositories.Implementation
             return ctx.Bouquet_Info.Find(id);
         }
 
+        public List<string> GetDistinctCategories()
+        {
+            var categoryList = ctx.Bouquet_Info.Select(b => b.category).Distinct().ToList();
+            return categoryList;
+
+        }
+
         public List<Bouquet_Info> GetRelatedBouquets(int bouquet_id)
         {
             var bouquet = this.GetById(bouquet_id);

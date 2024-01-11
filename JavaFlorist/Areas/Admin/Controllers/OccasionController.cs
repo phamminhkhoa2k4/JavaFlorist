@@ -33,6 +33,7 @@ namespace JavaFlorist.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Add(Occasion model)
         {
+            model.IsPattern = true;
             if (!ModelState.IsValid)
                 return View(model);
 
@@ -62,6 +63,7 @@ namespace JavaFlorist.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Edit(Occasion model)
         {
+            model.IsPattern = true;
             if (!ModelState.IsValid)
                 return View(model);
 

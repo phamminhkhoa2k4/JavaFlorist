@@ -9,5 +9,9 @@ namespace JavaFlorist.Repositories.Abstract
         Occasion GetById(int id);
         bool Delete(int id);
         IQueryable<Occasion> List();
-    }
+
+        IQueryable<Occasion> SubList(string occasionName);
+
+
+	}
 }

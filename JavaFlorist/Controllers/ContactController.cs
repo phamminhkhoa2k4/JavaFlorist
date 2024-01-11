@@ -21,8 +21,8 @@ namespace JavaFlorist.Controllers
         public IActionResult Send(Contact model)
         {
             model.marked = false;
-            //if (!ModelState.IsValid)
-            //    return View(model);
+            if (!ModelState.IsValid)
+                return View(model);
 
             var result = _contactService.Add(model);
             if (result)

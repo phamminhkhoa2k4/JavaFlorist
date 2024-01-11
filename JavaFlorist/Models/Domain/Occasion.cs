@@ -9,7 +9,9 @@ namespace JavaFlorist.Models.Domain
 
         [Required]
         public string? Occasion_name { get; set; }
-
+        [Required]
         public string? message { get; set; }
+
+        public bool? IsPattern { get; set; }
     }
 }

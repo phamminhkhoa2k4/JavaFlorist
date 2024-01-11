@@ -15,6 +15,7 @@ namespace JavaFlorist.Models.Domain
         public string? bouquetImage { get; set; }  
 
         [Required]
+        [Column(TypeName = "numeric(18, 2)")]
         public decimal price { get; set; }
 
 

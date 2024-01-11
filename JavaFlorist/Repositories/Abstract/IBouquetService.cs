@@ -19,5 +19,8 @@ namespace JavaFlorist.Repositories.Abstract
 
 		List<HomeModel> GetTopDistinctCategoriesBySoldCount();
 
-	}
+
+        List<string> GetDistinctCategories();   
+
+    }
 }
