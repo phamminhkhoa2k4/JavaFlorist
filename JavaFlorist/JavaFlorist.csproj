@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="wwwroot\Admin\libs\apexcharts\types\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 

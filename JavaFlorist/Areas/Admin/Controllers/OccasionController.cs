@@ -84,7 +84,17 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var result = _occasionService.Delete(id);
-            return RedirectToAction(nameof(OccasionList));
+            if (result)
+            {
+                TempData["msg"] = "Deleted Successfully";
+                return RedirectToAction(nameof(OccasionList));
+            }
+            else
+            {
+                TempData["msg"] = "Error on server side or occasion has been used";
+                return RedirectToAction(nameof(OccasionList));
+            }
+            
         }
     }
 }

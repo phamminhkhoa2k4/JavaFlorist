@@ -18,11 +18,14 @@ namespace JavaFlorist.Controllers
 
 
         [HttpPost]
-        public IActionResult Send(Contact model)
+        public IActionResult Contact(Contact model)
         {
             model.marked = false;
             if (!ModelState.IsValid)
+            {
                 return View(model);
+            }
+               
 
             var result = _contactService.Add(model);
             if (result)

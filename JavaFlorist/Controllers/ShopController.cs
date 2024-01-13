@@ -59,5 +59,19 @@ namespace JavaFlorist.Controllers
             var category = _bouquetService.GetDistinctCategories();
             return Json(category); 
         }
+
+        public IActionResult CountBouquet()
+        {
+            var data = _bouquetService.GetAll();
+            int count = data.Count();
+            return Json(count);
+        }
+
+        public IActionResult CountSold()
+        {
+            var data = _bouquetService.GetSoldAll();
+            var count = data.Sum(e => e.sold);
+            return Json(count);
+        }
     }
 }

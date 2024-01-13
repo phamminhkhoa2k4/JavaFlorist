@@ -1,5 +1,6 @@
 ﻿using JavaFlorist.Models.Domain;
 using JavaFlorist.Models.DTO;
+using Microsoft.AspNetCore.Identity;
 
 namespace JavaFlorist.Repositories.Abstract
 {
@@ -21,6 +22,10 @@ namespace JavaFlorist.Repositories.Abstract
 
 
         Task<Status> AddUserAdmin(RegistrationModel model);
+
+        Task<List<ApplicationUser>> GetAllUsers();
+
+
 
         //Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username);
     }

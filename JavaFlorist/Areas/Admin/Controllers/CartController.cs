@@ -61,13 +61,8 @@ namespace JavaFlorist.Areas.Admin.Controllers
             {
                 return Redirect(Request.Headers["referer"].ToString());
             }
-            else
-            { var receivedOrdersTotal = _orderService.GetAllTotalByReceivedStatus();
-                var totalSum = receivedOrdersTotal.Sum();
 
-                return View();      
-            }
-
+            return Redirect(Request.Headers["referer"].ToString());
         }
 
 

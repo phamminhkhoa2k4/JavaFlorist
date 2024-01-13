@@ -14,6 +14,12 @@
                     <h5 class="card-title fw-semibold mb-4">Blog List</h5>
                     <a href="/Admin/Blog/Add" class="btn btn-primary">Add</a>
                     <div class="table-responsive">
+                        @if (TempData["msg"] != null)
+                        {
+                            <div class="alert alert-success mt-3" role="alert">
+                                @TempData["msg"]
+                            </div>
+                        }
                         <table class="table text-nowrap mb-0 align-middle">
                             <thead class="text-dark fs-4">
                                 <tr>
@@ -39,7 +45,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach( var item in Model.BlogList)
+                                @foreach( var item in Model.BlogList.Reverse())
                                 {
                                     <tr>
                                         <td class="border-bottom-0"><h6 class="fw-semibold mb-0">@item.blog_id</h6></td>
@@ -63,12 +69,7 @@
                                 }
                             </tbody>
                         </table>
-                        @if (TempData["msg"] != null)
-                        {
-                            <div class="alert alert-success mt-3" role="alert">
-                                @TempData["msg"]
-                            </div>
-                        }
+                      
                     </div>
                 </div>
             </div>

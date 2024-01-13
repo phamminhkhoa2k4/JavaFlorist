@@ -34,12 +34,19 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(string userId)
         {
             var isDeleted = await authService.DeleteUser(userId);
+            isDeleted = false;
             if (isDeleted)
             {
+                TempData["msg"] = "Deleted Successfully";
+                return RedirectToAction(nameof(AdminList));
+            }
+            else
+            {
+                TempData["msg"] = "Error on server side";
                 return RedirectToAction(nameof(AdminList));
             }
 
-            return View("Error");
+          
         }
 
         [Area("Admin")]
@@ -53,7 +60,11 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public async Task<IActionResult> Add(RegistrationModel model)
         {
             if (!ModelState.IsValid)
+            {
+                TempData["msg"] = "Passwords do not match";
                 return View(model);
+            }
+               
             model.Role = "Admin";
 
             if (model.ImageFile != null)
@@ -72,16 +83,16 @@ namespace JavaFlorist.Areas.Admin.Controllers
             if (result.StatusCode == 1)
             {
                 TempData["msg"] = result.Message;
-                return View();
+                return View(model);
             }
             else if (result.StatusCode == 2)
             {
                 TempData["msg"] = result.Message;
-                return View();
+                return View(model);
             }
-            //TempData["msg"] = result.Message;
+            TempData["msg"] = result.Message;
             //TempData["RegisteredSuccessfully"] = true;
-            return Redirect(Request.Headers["referer"].ToString());
+            return RedirectToAction(nameof(AdminList));
         }
     }
 }

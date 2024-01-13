@@ -1,10 +1,14 @@
 ﻿using JavaFlorist.Models.DTO;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JavaFlorist.Models.Domain
 {
 	public class Cart
 	{
-		public int CartId { get; set; }
+
+        [Column(TypeName = "numeric(18, 0)")]
+        public int CartId { get; set; }
 
 
 		public List<CartItem> Items { get; set; } = new List<CartItem>();

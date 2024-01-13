@@ -16,9 +16,17 @@ namespace JavaFlorist.Areas.Admin.Controllers
             _discountService = discountService;
         }
         [Area("Admin")]
-        public IActionResult DiscountList()
+        public IActionResult DiscountList(string search)
         {
             var data = this._discountService.List().ToList();
+
+            // Filter data based on search criteria
+            if (!string.IsNullOrEmpty(search))
+            {
+                data = data.Where(d => d.code.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.SearchTerm = search;
             return View(data);
         }
         [Area("Admin")]
@@ -81,7 +89,17 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var result = _discountService.Delete(id);
-            return RedirectToAction(nameof(DiscountList));
+            if (result)
+            {
+                TempData["msg"] = "Deleted Successfully";
+                return RedirectToAction(nameof(DiscountList));
+            }
+            else
+            {
+                TempData["msg"] = "Error on server side or discount has been used";
+                return RedirectToAction(nameof(DiscountList));
+            }
+           
         }
     }
 }

@@ -4,14 +4,23 @@ namespace JavaFlorist.Models.Domain
 {
 	public class CartItem
 	{
-		public int CartItemId { get; set; }
+
+        [Column(TypeName = "numeric(18, 0)")]
+        public int CartItemId { get; set; }
 
 		[ForeignKey("Bouquet_Info")]
-		public int bouquet_id { get; set; }
+        [Column(TypeName = "numeric(18, 0)")]
+        public int bouquet_id { get; set; }
+
 		public Bouquet_Info Bouquet { get; set; }
-		public int Quantity { get; set; }
-	    
-		public decimal SubTotal { get; set; }
-		public int cust_id { get; set; }
+
+        [Column(TypeName = "numeric(18, 0)")]
+        public int Quantity { get; set; }
+
+        [Column(TypeName = "numeric(18, 2)")]
+        public decimal SubTotal { get; set; }
+
+        [Column(TypeName = "numeric(18, 0)")]
+        public int cust_id { get; set; }
 	}
 }

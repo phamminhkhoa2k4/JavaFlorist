@@ -110,7 +110,12 @@ namespace JavaFlorist.Controllers
 
 
 
-
+        public IActionResult CustomerCount()
+        {
+            var data = authService.GetAllUsers();
+            var count = data.Result.Count;
+            return Json(count);
+        }
 
     }
 }

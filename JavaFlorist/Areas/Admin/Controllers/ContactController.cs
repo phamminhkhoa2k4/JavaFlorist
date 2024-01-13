@@ -25,7 +25,18 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var result = _contactService.Delete(id);
-            return RedirectToAction(nameof(ContactList));
+            if (result)
+            {
+                TempData["msg"] = "Deleted Successfully";
+                return RedirectToAction(nameof(ContactList));
+
+            }
+            else
+            {
+                TempData["msg"] = "Error on server side";
+                return RedirectToAction(nameof(ContactList));
+            }
+           
         }
 
         [Area("Admin")]

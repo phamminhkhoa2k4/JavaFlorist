@@ -111,7 +111,17 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var result = _blogService.Delete(id);
-            return RedirectToAction(nameof(BlogList));
+            if (result)
+            {
+                TempData["msg"] = "Deleted Successfully";
+                return RedirectToAction(nameof(BlogList));
+            }
+            else
+            {
+                TempData["msg"] = "Error on server side";
+                return RedirectToAction(nameof(BlogList));
+            }
+            
         }
 
     }

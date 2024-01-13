@@ -13,6 +13,8 @@ namespace JavaFlorist.Repositories.Abstract
         BouquetListVm ListCategory(string category = "", bool paging = false, int currentPage = 0);
 
         List<Bouquet_Info> Search(string searchTerm);
+        List<Bouquet_Info> GetAll();
+        List<Bouquet_Info> GetSoldAll();
 
         List<Bouquet_Info> GetRelatedBouquets(int bouquet_id);
         List<Bouquet_Info> GetByCategory(string category);

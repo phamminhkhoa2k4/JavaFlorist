@@ -1,4 +1,4 @@
-﻿using JavaFlorist.Migrations;
+﻿
 using JavaFlorist.Models.Domain;
 using JavaFlorist.Repositories.Abstract;
 using Microsoft.AspNetCore.Mvc;
@@ -21,7 +21,7 @@ namespace JavaFlorist.Controllers
             {
                 if(data.count > 0)
                 {
-                    int des = data.decrease;
+                    decimal des = data.decrease;
                     int id = data.discount_id;
                     return Json(new { discount = des, discount_id = id, message = "Apply Successfull !" }); 
                 }

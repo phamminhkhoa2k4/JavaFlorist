@@ -6,12 +6,18 @@ namespace JavaFlorist.Models.Domain
     public class Bouquet_Info
     {
         [Key]
+        [Column(TypeName = "numeric(18, 0)")]
         public int bouquet_id { get; set; }
 
 
 
         [Required]
+        [StringLength(maximumLength: 50)]
+        [Column(TypeName = "varchar(50)")]
         public string name { get; set; }
+
+        [StringLength(maximumLength: 1000)]
+        [Column(TypeName = "varchar(max)")]
         public string? bouquetImage { get; set; }  
 
         [Required]
@@ -23,9 +29,13 @@ namespace JavaFlorist.Models.Domain
 
 
         [Required]
+        [MaxLength]
+        [Column(TypeName = "text")]
         public string description { get; set; }
 
         [Required]
+        [StringLength(maximumLength: 255)]
+        [Column(TypeName = "varchar(255)")]
         public string? category { get; set; }
 
         [NotMapped]

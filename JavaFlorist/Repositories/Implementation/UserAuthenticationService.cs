@@ -3,7 +3,6 @@ using JavaFlorist.Models.Domain;
 using JavaFlorist.Models.DTO;
 using JavaFlorist.Repositories.Abstract;
 using System.Security.Claims;
-using JavaFlorist.Migrations;
 using Microsoft.EntityFrameworkCore;
 using static System.Net.Mime.MediaTypeNames;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -264,12 +263,17 @@ namespace JavaFlorist.Repositories.Implementation
             }
 
             // Đăng nhập người dùng mới đăng ký thành công
-            await signInManager.SignInAsync(user, isPersistent: false);
+            //await signInManager.SignInAsync(user, isPersistent: false);
 
 
             status.StatusCode = 0;
             status.Message = "You have registered successfully";
             return status;
+        }
+
+        public async Task<List<ApplicationUser>> GetAllUsers()
+        {
+            return await userManager.Users.ToListAsync();
         }
         //public async task<status> changepasswordasync(changepasswordmodel model, string username)
         //{

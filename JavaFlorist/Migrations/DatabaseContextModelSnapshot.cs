@@ -65,7 +65,8 @@ namespace JavaFlorist.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfilePicture")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(max)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -77,8 +78,8 @@ namespace JavaFlorist.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("cust_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("cust_id")
+                        .HasColumnType("numeric(18,0)");
 
                     b.HasKey("Id");
 
@@ -98,26 +99,28 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Blog", b =>
                 {
-                    b.Property<int>("blog_id")
+                    b.Property<decimal>("blog_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("blog_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("blog_id"), 1L, 1);
 
                     b.Property<DateTime>("blog_date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("thumbnail")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(max)");
 
                     b.Property<string>("title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(max)");
 
                     b.HasKey("blog_id");
 
@@ -126,26 +129,29 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Bouquet_Info", b =>
                 {
-                    b.Property<int>("bouquet_id")
+                    b.Property<decimal>("bouquet_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("bouquet_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("bouquet_id"), 1L, 1);
 
                     b.Property<string>("bouquetImage")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(max)");
 
                     b.Property<string>("category")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<decimal>("price")
                         .HasColumnType("decimal(18,2)");
@@ -160,11 +166,11 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Cart", b =>
                 {
-                    b.Property<int>("CartId")
+                    b.Property<decimal>("CartId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("CartId"), 1L, 1);
 
                     b.HasKey("CartId");
 
@@ -173,26 +179,26 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.CartItem", b =>
                 {
-                    b.Property<int>("CartItemId")
+                    b.Property<decimal>("CartItemId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CartItemId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("CartItemId"), 1L, 1);
 
-                    b.Property<int?>("CartId")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("CartId")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int>("Quantity")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("numeric(18,0)");
 
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("bouquet_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("bouquet_id")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int>("cust_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("cust_id")
+                        .HasColumnType("numeric(18,0)");
 
                     b.HasKey("CartItemId");
 
@@ -205,15 +211,16 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Contact", b =>
                 {
-                    b.Property<int>("contact_id")
+                    b.Property<decimal>("contact_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("contact_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("contact_id"), 1L, 1);
 
                     b.Property<string>("email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<bool?>("marked")
                         .IsRequired()
@@ -221,15 +228,17 @@ namespace JavaFlorist.Migrations
 
                     b.Property<string>("message")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("subject")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.HasKey("contact_id");
 
@@ -238,30 +247,33 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Customer", b =>
                 {
-                    b.Property<int>("cust_id")
+                    b.Property<decimal>("cust_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("cust_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("cust_id"), 1L, 1);
 
                     b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(max)");
 
                     b.Property<DateTime>("Dob")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
 
                     b.Property<string>("F_name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Gender")
                         .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
+                        .HasColumnType("char(1)");
 
                     b.Property<string>("L_name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
-                    b.Property<long>("P_no")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("P_no")
+                        .HasColumnType("numeric(18,0)");
 
                     b.HasKey("cust_id");
 
@@ -270,25 +282,32 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Delivery_Info", b =>
                 {
-                    b.Property<int>("delivery_id")
+                    b.Property<decimal>("delivery_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("delivery_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("delivery_id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(max)");
 
                     b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("date");
+
+                    b.Property<string>("Delivery_status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
-                    b.Property<long>("Phone")
-                        .HasColumnType("bigint");
+                    b.Property<decimal>("Phone")
+                        .HasColumnType("numeric(18,0)");
 
                     b.HasKey("delivery_id");
 
@@ -297,21 +316,22 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Discount", b =>
                 {
-                    b.Property<int>("discount_id")
+                    b.Property<decimal>("discount_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("discount_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("discount_id"), 1L, 1);
 
                     b.Property<string>("code")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("varchar(50)");
 
-                    b.Property<int>("count")
-                        .HasColumnType("int");
+                    b.Property<decimal>("count")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int>("decrease")
-                        .HasColumnType("int");
+                    b.Property<decimal>("decrease")
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasKey("discount_id");
 
@@ -320,18 +340,24 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Occasion", b =>
                 {
-                    b.Property<int>("Occasion_id")
+                    b.Property<decimal>("Occasion_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Occasion_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("Occasion_id"), 1L, 1);
+
+                    b.Property<bool?>("IsPattern")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Occasion_name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("message")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("varchar(max)");
 
                     b.HasKey("Occasion_id");
 
@@ -340,29 +366,29 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Order", b =>
                 {
-                    b.Property<int>("order_id")
+                    b.Property<decimal>("order_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("order_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("order_id"), 1L, 1);
 
-                    b.Property<int>("CartId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("CartId")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int>("Occasion_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Occasion_id")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int>("Total")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("numeric(18,2)");
 
-                    b.Property<int>("cust_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("cust_id")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int>("delivery_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("delivery_id")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int?>("discount_id")
-                        .HasColumnType("int");
+                    b.Property<decimal?>("discount_id")
+                        .HasColumnType("numeric(18,0)");
 
                     b.Property<DateTime>("order_date")
                         .HasColumnType("datetime2");
@@ -384,17 +410,17 @@ namespace JavaFlorist.Migrations
 
             modelBuilder.Entity("JavaFlorist.Models.Domain.Wishlist", b =>
                 {
-                    b.Property<int>("wishlist_id")
+                    b.Property<decimal>("wishlist_id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("numeric(18,0)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("wishlist_id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<decimal>("wishlist_id"), 1L, 1);
 
-                    b.Property<int>("bouquet_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("bouquet_id")
+                        .HasColumnType("numeric(18,0)");
 
-                    b.Property<int>("cust_id")
-                        .HasColumnType("int");
+                    b.Property<decimal>("cust_id")
+                        .HasColumnType("numeric(18,0)");
 
                     b.HasKey("wishlist_id");
 

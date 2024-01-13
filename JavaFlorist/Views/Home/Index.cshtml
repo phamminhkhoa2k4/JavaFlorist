@@ -31,18 +31,18 @@
                     </div>
                     <div class="media-body">
                         <h3 class="heading">Free Shipping</h3>
-                        <span>On order over $100</span>
+                        <span>For all orders</span>
                     </div>
                 </div>
             </div>
             <div class="col-md-3 text-center d-flex align-self-stretch ftco-animate">
                 <div class="media block-6 services mb-md-0 mb-4">
                     <div class="icon bg-color-2 d-flex justify-content-center align-items-center mb-2">
-                        <span class="flaticon-diet"></span>
+                        <img src="/img/1232.jpg" style="width:100px;height:100px;"/>
                     </div>
                     <div class="media-body">
                         <h3 class="heading">Always Fresh</h3>
-                        <span>Product well package</span>
+                        <span>Beautiful bouquet</span>
                     </div>
                 </div>
             </div>
@@ -81,15 +81,14 @@
             {
                 <div class="col-md-8">
                     <div class="row">
-
-
                         <div class="col-md-6 order-md-last align-items-stretch d-flex">
                             <div class="category-wrap-2 ftco-animate img align-self-stretch d-flex"
                                  style="background-image: url(/Uploads/@Model[0].topFiveProducts[0].bouquetImage)">
                                 <div class="text text-center">
                                     <h2>Flowers</h2>
                                     <p>gift to someone you love</p>
-                                    <p><a href="/Shop/Shop" class="btn btn-primary">Shop now</a></p>
+                                    <p><a href="/Shop/Shop" class="btn btn-primary mb-5">Shop now</a></p>
+                                    <p><a href="/Shop/FilterByCategory?category=@Model[0].topFiveProducts[0].category" class="btn btn-primary">@Model[0].topFiveProducts[0].category</a></p>
                                 </div>
                             </div>
                         </div>
@@ -98,14 +97,14 @@
                                  style="background-image: url(/Uploads/@Model[0].topFiveProducts[1].bouquetImage
 )">
                                 <div class="text px-3 py-1">
-                                    <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[1].category</a></h2>
+                                    <h2 class="mb-0"><a href="/Shop/FilterByCategory?category=@Model[0].topFiveProducts[2].category">@Model[0].topFiveProducts[1].category</a></h2>
                                 </div>
                             </div>
                             <div class="category-wrap ftco-animate img d-flex align-items-end"
                                  style="background-image: url(/Uploads/@Model[0].topFiveProducts[2].bouquetImage
 )">
                                 <div class="text px-3 py-1">
-                                    <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[2].category</a></h2>
+                                    <h2 class="mb-0"><a href="/Shop/FilterByCategory?category=@Model[0].topFiveProducts[2].category">@Model[0].topFiveProducts[2].category</a></h2>
                                 </div>
                             </div>
                         </div>
@@ -113,20 +112,23 @@
                 </div>
 
                 <div class="col-md-4">
+                  
                     <div class="category-wrap ftco-animate img mb-4 d-flex align-items-end"
                          style="background-image: url(/Uploads/@Model[0].topFiveProducts[3].bouquetImage
 )">
                         <div class="text px-3 py-1">
-                            <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[3].category</a></h2>
+                            <h2 class="mb-0"><a href="/Shop/FilterByCategory?category=@Model[0].topFiveProducts[3].category">@Model[0].topFiveProducts[3].category</a></h2>
                         </div>
                     </div>
+                    
                     <div class="category-wrap ftco-animate img d-flex align-items-end"
                          style="background-image: url(/Uploads/@Model[0].topFiveProducts[4].bouquetImage
 )">
                         <div class="text px-3 py-1">
-                            <h2 class="mb-0"><a href="#">@Model[0].topFiveProducts[4].category</a></h2>
+                            <h2 class="mb-0"><a href="/Shop/FilterByCategory?category=@Model[0].topFiveProducts[4].category">@Model[0].topFiveProducts[4].category</a></h2>
                         </div>
                     </div>
+
                 </div>
             }
            
@@ -157,10 +159,9 @@
                 {
                     <div class="col-md-6 col-lg-3 ftco-animate">
                         <div class="product">
-                            <a href="#" class="img-prod">
+                            <a href="#" class="img-prod" >
                                 <img class="img-fluid"
-                                     src="/Uploads/@item.bouquetImage" />
-                                <span class="status">30%</span>
+                                     src="/Uploads/@item.bouquetImage" style="height:300px;" />
                                 <div class="overlay"></div>
                             </a>
                             <div class="text py-3 pb-4 px-3 text-center">

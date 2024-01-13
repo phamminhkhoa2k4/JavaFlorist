@@ -47,6 +47,11 @@ namespace JavaFlorist.Repositories.Implementation
             }
         }
 
+        public List<Bouquet_Info> GetAll()
+        {
+            return ctx.Bouquet_Info.ToList();
+        }
+
         public List<Bouquet_Info> GetByCategory(string category)
         {
             var bouquetsCategory = ctx.Bouquet_Info.Where(b => b.category == category).ToList();
@@ -75,6 +80,11 @@ namespace JavaFlorist.Repositories.Implementation
             relatedBouquets = relatedBouquets.Where(b => b.bouquet_id != bouquet_id).Take(4).ToList();
 
             return relatedBouquets;
+        }
+
+        public List<Bouquet_Info> GetSoldAll()
+        {
+            return ctx.Bouquet_Info.Where(e => e.sold != 0).ToList();
         }
 
         public List<HomeModel> GetTopDistinctCategoriesBySoldCount()
@@ -185,6 +195,8 @@ namespace JavaFlorist.Repositories.Implementation
 
             return suggestions;
         }
+
+
 
         public bool Update(Bouquet_Info model)
         {

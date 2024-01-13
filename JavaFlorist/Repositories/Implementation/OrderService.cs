@@ -231,7 +231,7 @@ namespace JavaFlorist.Repositories.Implementation
 
           var topSoldBouquets = ctx.Bouquet_Info
         .OrderByDescending(b => b.sold)
-        .Take(4)
+        .Take(7)
         .ToList();
 
 

@@ -191,6 +191,15 @@ namespace JavaFlorist.Controllers
             return Redirect(Request.Headers["referer"].ToString());
         }
 
+
+
+        public IActionResult CountOrder()
+        {
+            var data = _orderService.GetAllOrders();
+            var count = data.Count();
+            return Json(count);
+        }
+
     }
 
 }
