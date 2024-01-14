@@ -9,6 +9,7 @@ namespace JavaFlorist.Repositories.Abstract
         bool Update(Bouquet_Info model);
         Bouquet_Info GetById(int id);
         bool Delete(int id);
+        IQueryable<Bouquet_Info> List();
         BouquetListVm List(string term = "", bool paging = false, int currentPage = 0);
         BouquetListVm ListCategory(string category = "", bool paging = false, int currentPage = 0);
 

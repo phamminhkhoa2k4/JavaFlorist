@@ -12,6 +12,15 @@
             <div class="card w-100">
                 <div class="card-body p-4" style="margin-top:80px;">
                     <h5 class="card-title fw-semibold mb-4">Contact List</h5>
+                    <div class="d-flex">
+                    <form method="get" action="/Admin/Contact/ContactList"  style="padding-left:10px">
+                            <div class="d-flex" style="gap:5px;">
+                                <input type="text" class="form-control" id="searchInput" name="search" value="@ViewBag.SearchTerm" />
+                               <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+
+                    </div>
                     <div class="table-responsive">
                          @if (TempData["msg"] != null)
                             {
@@ -48,7 +57,7 @@
                             </thead>
                             <tbody>
                   
-                                @foreach(var item in  Model )
+                                @foreach(var item in  Model.Reverse() )
                                 {
                                     <tr>
                                         <td class="border-bottom-0"><h6 class="fw-semibold mb-0">@item.contact_id</h6></td>

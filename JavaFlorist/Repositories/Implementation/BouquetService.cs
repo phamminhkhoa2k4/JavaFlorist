@@ -145,7 +145,7 @@ namespace JavaFlorist.Repositories.Implementation
 
             if (paging)
             {
-                int pageSize = 20;
+                int pageSize = 100 ;
                 int count = list.Count;
                 int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
                 list = list.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
@@ -156,6 +156,12 @@ namespace JavaFlorist.Repositories.Implementation
 
 
             data.BouquetList = list.AsQueryable();
+            return data;
+        }
+
+        public IQueryable<Bouquet_Info> List()
+        {
+            var data = ctx.Bouquet_Info.AsQueryable();
             return data;
         }
 

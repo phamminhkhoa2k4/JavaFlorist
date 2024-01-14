@@ -12,16 +12,19 @@
             <div class="card w-100">
                 <div class="card-body p-4" style="margin-top:80px;">
                     <h5 class="card-title fw-semibold mb-4">Discount List</h5>
-                    <a href="/Admin/Discount/Add" class="btn btn-primary">Add</a>
-                    <div class="table-responsive">
-                         <form method="get" action="/Admin/Discount/DiscountList">
-                            <div class="mb-3">
-                                <label for="searchInput" class="form-label">Search:</label>
+                    <div class="d-flex">
+                         <a href="/Admin/Discount/Add" class="btn btn-primary">Add</a>
+                    <form method="get" action="/Admin/Discount/DiscountList"  style="padding-left:10px">
+                            <div class="d-flex" style="gap:5px;">
                                 <input type="text" class="form-control" id="searchInput" name="search" value="@ViewBag.SearchTerm" />
+                               <button type="submit" class="btn btn-primary">Search</button>
                             </div>
-                            <button type="submit" class="btn btn-primary">Search</button>
                         </form>
 
+                    </div>
+                   
+                    <div class="table-responsive">
+                         
                           @if (TempData["msg"] != null)
                             {
                                 <div class="alert alert-success mt-3" role="alert">

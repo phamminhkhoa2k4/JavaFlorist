@@ -49,11 +49,11 @@ namespace JavaFlorist.Repositories.Implementation
             return ctx.Blog.Find(id);
         }
 
-        //public IQueryable<Blog> List()
-        //{
-        //    var data = ctx.Blog.AsQueryable();
-        //    return data;
-        //}
+        public IQueryable<Blog> List()
+        {
+            var data = ctx.Blog.AsQueryable();
+            return data;
+        }
         public BlogListVm List(string term = "", bool paging = false, int currentPage = 0)
         {
             var data = new BlogListVm();

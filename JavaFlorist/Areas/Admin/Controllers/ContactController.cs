@@ -15,9 +15,16 @@ namespace JavaFlorist.Areas.Admin.Controllers
             _contactService = contactService;
         }
         [Area("Admin")]
-        public IActionResult ContactList()
+        public IActionResult ContactList(string search)
         {
             var data = this._contactService.List().ToList();
+            // Filter data based on search criteria
+            if (!string.IsNullOrEmpty(search))
+            {
+                data = data.Where(d => d.name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.SearchTerm = search;
             return View(data);
         }
 

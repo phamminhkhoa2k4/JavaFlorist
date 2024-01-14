@@ -22,7 +22,6 @@
     if (!string.IsNullOrEmpty(username))
     {
         var serviceProvider = ViewContext.HttpContext.RequestServices;
-        // Truy cập đến đối tượng DbContext từ dịch vụ (Service) hoặc Dependency Injection (DI)
         var dbContext = serviceProvider.GetRequiredService<DatabaseContext>();
         var user = await UserManager.FindByNameAsync(username);
         avatar = user?.ProfilePicture ?? "";
@@ -88,7 +87,7 @@
 
     <!--  Begin Navigation -->
 
-    <header class="site-navbar" role="banner">
+    <header class="site-navbar" role="banner" >
         <div class="site-navbar-top">
             <div class="container">
                 <div class="row align-items-center">
@@ -199,7 +198,7 @@
         {
             <!--  Begin Slider -->
             <section id="home-section" class="hero">
-                <div class="home-slider owl-carousel">
+                <div class="home-slider owl-carousel" >
                     <div class="slider-item" style="background-image: url(/BG/13.jpg)">
                         <div class="overlay"></div>
                         <div class="container">
@@ -252,15 +251,30 @@
                             <span class="subheading">Testimony</span>
                             <h2 class="mb-4">Our satisfied customer says</h2>
                             <p>
-                                Far far away, behind the word mountains, far from the countries
-                                Vokalia and Consonantia, there live the blind texts. Separated
-                                they live in
+                                Happiness is holding flowers in your hand.
                             </p>
                         </div>
                     </div>
                     <div class="row ftco-animate">
                         <div class="col-md-12">
                             <div class="carousel-testimony owl-carousel">
+                                <div class="item">
+                                    <div class="testimony-wrap p-4 pb-5">
+                                        <div class="user-img mb-5"
+                                             style="background-image: url(/images/person_3.jpg)">
+                                            <span class="quote d-flex align-items-center justify-content-center">
+                                                <i class="icon-quote-left"></i>
+                                            </span>
+                                        </div>
+                                        <div class="text text-center">
+                                            <p class="mb-5 pl-4 line">
+                                                The scent of flowers only spreads in the direction of the wind. But a person's kindness spreads in all directions.
+                                            </p>
+                                            <p class="name">Pham Minh Khoa</p>
+                                            <span class="position">Leader</span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="item">
                                     <div class="testimony-wrap p-4 pb-5">
                                         <div class="user-img mb-5"
@@ -271,9 +285,7 @@
                                         </div>
                                         <div class="text text-center">
                                             <p class="mb-5 pl-4 line">
-                                                Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind
-                                                texts.
+                                                Happiness radiates like the fragrance from a flower and it will attract all the good things towards you.
                                             </p>
                                             <p class="name">Duong Gia Tan</p>
                                             <span class="position">Member</span>
@@ -290,35 +302,14 @@
                                         </div>
                                         <div class="text text-center">
                                             <p class="mb-5 pl-4 line">
-                                                Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind
-                                                texts.
-                                            </p>
-                                            <p class="name">Pham Minh Khoa</p>
-                                            <span class="position">Leader</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="item">
-                                    <div class="testimony-wrap p-4 pb-5">
-                                        <div class="user-img mb-5"
-                                             style="background-image: url(/images/person_3.jpg)">
-                                            <span class="quote d-flex align-items-center justify-content-center">
-                                                <i class="icon-quote-left"></i>
-                                            </span>
-                                        </div>
-                                        <div class="text text-center">
-                                            <p class="mb-5 pl-4 line">
-                                                Far far away, behind the word mountains, far from the
-                                                countries Vokalia and Consonantia, there live the blind
-                                                texts.
+                                                Flowers are sunshine, food and medicine for the soul, making people better, happier, and more useful.
                                             </p>
                                             <p class="name">Huynh Chi Nguyen</p>
                                             <span class="position">Member</span>
                                         </div>
                                     </div>
                                 </div>
+                               
                             </div>
                         </div>
                     </div>
@@ -707,7 +698,19 @@
                     <div class="text-right cross"> <i class="fa fa-times"> </div>
                     <div class="card-body text-center">
                         <img src="https://img.icons8.com/bubbles/200/000000/trophy.png">
-                        <h4>WELCOME TO @username !</h4>
+
+                        @if (TempData.ContainsKey("RegisteredSuccessfully") && (bool)TempData["RegisteredSuccessfully"])
+                            {
+                                <h4>Congratulations !</h4>
+                            }
+                            else
+                            {
+                                <h4>WELCOME TO @username !</h4>
+                            }
+                        
+
+                       
+                       
                         @if (TempData["msg"] != null)
                         {
                             <p>@TempData["msg"]</p>
@@ -866,19 +869,16 @@
             items.forEach(item => {
                 subtotal += parseFloat(item.innerText.replace('$', '') || 0); // Use `|| 0` to avoid NaN if there's an empty string
             });
-            let delivery = 2; // Set your delivery cost here
             if (subtotal == 0) {
                 sessionStorage.removeItem('discount');
                 sessionStorage.removeItem('discount_id');
-                delivery = 0;
             }
             let discount = parseFloat(sessionStorage.getItem('discount')) || 0;
             let discount_id = sessionStorage.getItem('discount_id') || 0;
           
-            const total = subtotal + delivery - discount;
+            const total = subtotal - discount;
 
             document.querySelector('#subtotal').innerText = `$${subtotal.toFixed(2)}`;
-            document.querySelector('#delivery').innerText = `$${delivery.toFixed(2)}`;
             document.querySelector('#discount').innerText = `$${discount.toFixed(2)}`;
             document.querySelector('#total').innerText = `$${total.toFixed(2)}`;
             document.querySelector('#totalInput').value = total;
@@ -919,15 +919,14 @@
                     var discount_id = response.discount_id;
                     var message = response.message;
 
-                    
 
                     const subtotal = parseFloat(document.querySelector('#subtotal').innerText.replace('$', ''));
-                    const delivery = parseFloat(document.querySelector('#delivery').innerText.replace('$', ''));
+            
                     if(subtotal != 0){
                         $('#discount').text('$' + discount.toFixed(2));
                         sessionStorage.setItem('discount', discount);
                         sessionStorage.setItem('discount_id', discount_id);
-                    const newTotal = subtotal + delivery - discount;
+                    const newTotal = subtotal  - discount;
                     document.querySelector('#total').innerText = '$' + newTotal.toFixed(2);
                         document.querySelector('#mess').innerText = message;
 
@@ -954,7 +953,6 @@
             if (!(cartCheckoutRegex.test(currentLocation) || cartCartRegex.test(currentLocation))) {
                 sessionStorage.removeItem('discount');
                 sessionStorage.removeItem('discount_id');
-                // Add more removals if needed
             }
         });
 
@@ -981,16 +979,14 @@
                 e.preventDefault();
                 var quantityValue = $('#quantity').val();
                 var bouquetId = $(this).data('bouquet-id');
-                var customerId = '@id'; // Replace with actual value
+                var customerId = '@id'; 
                 $.ajax({
-                    url: '/Cart/AddToCart', // Endpoint cập nhật số lượng
+                    url: '/Cart/AddToCart', 
                     method: 'POST',
                     data: { bouquetId: bouquetId, cust_id: customerId, quantity: quantityValue },
                     success: function (response) {
-                        // Xử lý kết quả từ server nếu cần
                     },
                     error: function (error) {
-                        // Xử lý lỗi nếu có
                     }
                 });
             });
@@ -1075,36 +1071,82 @@
 
 </script>
     <script>
+        //$(document).ready(function () {
+        //    $.ajax({
+        //        url: '/Shop/listCategory', 
+        //        type: 'GET',                    
+        //        dataType: 'json',               
+        //        success: function (data) {
+        //            var categoryList = $('#categoryList');
+        //            var dropCategory = $('#dropcategory');
+
+        //            $.each(data, function (index, item) {
+        //                var li = $('<li>');
+        //                var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item);
+        //                li.append(a);
+        //                categoryList.append(li);
+        //            });
+
+        //            $.each(data, function (index, item) {
+        //                var li = $('<li>');
+        //                var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item);
+        //                li.append(a);
+        //                dropCategory.append(li);
+        //            });
+
+        //        },
+        //        error: function (error) {           
+        //            console.error(error);
+        //        }
+        //    });
+        //});
+    </script>
+    <script>
         $(document).ready(function () {
+            // Function to handle the click event on category linkssxdas
+            function handleCategoryClick() {
+                // Remove the 'active' class from all category links
+                $('.category-link').removeClass('active');
+
+                // Add the 'active' class to the clicked category link
+                $(this).addClass('active');
+            }
+
+            // Make the AJAX request to fetch category data
             $.ajax({
-                url: '/Shop/listCategory', 
-                type: 'GET',                    
-                dataType: 'json',               
+                url: '/Shop/listCategory',
+                type: 'GET',
+                dataType: 'json',
                 success: function (data) {
                     var categoryList = $('#categoryList');
                     var dropCategory = $('#dropcategory');
 
+                    // Iterate through the data to create and append category links
                     $.each(data, function (index, item) {
                         var li = $('<li>');
-                        var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item);
+                        var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item).addClass('category-link');
                         li.append(a);
                         categoryList.append(li);
                     });
 
+                    // Duplicate the logic for the dropCategory
                     $.each(data, function (index, item) {
                         var li = $('<li>');
-                        var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item);
+                        var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item).addClass('category-link');
                         li.append(a);
                         dropCategory.append(li);
                     });
 
+                    // Attach the click event handler to all category links
+                    $('.category-link').on('click', handleCategoryClick);
                 },
-                error: function (error) {           
+                error: function (error) {
                     console.error(error);
                 }
             });
         });
     </script>
+
     <script>
         var money = document.getElementById('money').innerHTML;
         var currency = document.getElementById('currency').innerHTML;
@@ -1169,7 +1211,6 @@
             var occasionName = $('#occasionName');
             var occasionMessage = $('#occasionMessage');
 
-            // Function to make the AJAX call
             function updateOptions() {
                 var Oname = occasionName.val();
 
@@ -1177,7 +1218,6 @@
                     url: '/Cart/MessagePattern?occasionName=' + Oname,
                     type: 'GET',
                     success: function (data) {
-                        // Clear existing options before adding new ones
                         occasionMessage.empty();
 
                         $.each(data, function (index, item) {
@@ -1190,10 +1230,8 @@
                 });
             }
 
-            // Initial call when the page loads
             updateOptions();
 
-            // Call updateOptions() every time the select changes
             occasionName.on('change', updateOptions);
         });
     </script>

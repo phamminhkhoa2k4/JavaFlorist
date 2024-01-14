@@ -143,14 +143,18 @@ namespace JavaFlorist.Controllers
                 {
 					_discountService.Decrease((int)model.discount_id);
 				}
-                
+                TempData["order"] = true;
+                TempData["msg"] = "You have placed your order successfully and are waiting for confirmation!";
+				TempData["RegisteredSuccessfully"] = true;
+				return RedirectToAction("Cart", "Cart", new { cust_id = model.cust_id });
+
 			}
 			else
             {
                 return Redirect(Request.Headers["referer"].ToString());
             }
 
-			return RedirectToAction("Cart", "Cart", new { cust_id = model.cust_id });
+			
 
 		}
 

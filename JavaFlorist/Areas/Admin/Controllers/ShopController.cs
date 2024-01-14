@@ -19,9 +19,18 @@ namespace JavaFlorist.Areas.Admin.Controllers
             _fileService = fileService;
         }
         [Area("Admin")]
-        public IActionResult ShopList()
+        public IActionResult ShopList(string search)
         {
-            var data = this._bouquetService.List();
+            var data = this._bouquetService.List().ToList();
+
+            // Filter data based on search criteria
+            if (!string.IsNullOrEmpty(search))
+            {
+                data = data.Where(d => d.name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.SearchTerm = search;
+
             return View(data);
         }
 

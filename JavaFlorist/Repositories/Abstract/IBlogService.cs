@@ -9,7 +9,7 @@ namespace JavaFlorist.Repositories.Abstract
         bool Update(Blog model);
         Blog GetById(int id);
         bool Delete(int id);
-        //IQueryable<Blog> List();
+        IQueryable<Blog> List();
 
         BlogListVm List(string term = "", bool paging = false, int currentPage = 0);
 

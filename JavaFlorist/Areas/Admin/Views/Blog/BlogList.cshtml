@@ -1,4 +1,4 @@
-﻿@model JavaFlorist.Models.DTO.BlogListVm;
+﻿@model IEnumerable<JavaFlorist.Models.Domain.Blog>
 @{
     ViewData["Title"] = "BlogList";
     Layout = "~/Areas/Admin/Views/Shared/_AdLayout.cshtml";
@@ -12,7 +12,16 @@
             <div class="card w-100">
                 <div class="card-body p-4" style="margin-top:80px;">
                     <h5 class="card-title fw-semibold mb-4">Blog List</h5>
-                    <a href="/Admin/Blog/Add" class="btn btn-primary">Add</a>
+                    <div class="d-flex">
+                        <a href="/Admin/Blog/Add" class="btn btn-primary">Add</a>
+                        <form method="get" asp-action="BlogList" style="padding-left:10px">
+                            <div class="d-flex" style="gap:5px;">
+                                <input type="text" class="form-control"  name="search" value="@ViewBag.SearchTerm" />
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+
+                    </div>
                     <div class="table-responsive">
                         @if (TempData["msg"] != null)
                         {
@@ -45,7 +54,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach( var item in Model.BlogList.Reverse())
+                                @foreach( var item in Model.Reverse())
                                 {
                                     <tr>
                                         <td class="border-bottom-0"><h6 class="fw-semibold mb-0">@item.blog_id</h6></td>

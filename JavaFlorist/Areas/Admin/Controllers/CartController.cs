@@ -15,9 +15,16 @@ namespace JavaFlorist.Areas.Admin.Controllers
             _orderService = orderService;
         }
         [Area("Admin")]
-        public IActionResult OrderList()
+        public IActionResult OrderList(string search)
         {
             var orders = _orderService.GetAllOrders();
+            // Filter data based on search criteria
+            if (!string.IsNullOrEmpty(search))
+            {
+                orders = orders.Where(d => d.Delivery_Info.Name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.SearchTerm = search;
             return View(orders);
         }
 

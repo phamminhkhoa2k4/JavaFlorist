@@ -15,10 +15,17 @@ namespace JavaFlorist.Areas.Admin.Controllers
             this._occasionService = occasionService;
         }
         [Area("Admin")]
-        public IActionResult OccasionList()
+        public IActionResult OccasionList(string search)
         {
            var data = _occasionService.List().ToList();
-            
+            // Filter data based on search criteria
+            if (!string.IsNullOrEmpty(search))
+            {
+                data = data.Where(d => d.Occasion_name.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.SearchTerm = search;
+
             return View(data);
         }
 

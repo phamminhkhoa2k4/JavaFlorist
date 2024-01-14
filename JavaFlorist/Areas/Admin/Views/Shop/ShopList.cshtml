@@ -1,8 +1,8 @@
-﻿@model JavaFlorist.Models.DTO.BouquetListVm;
+﻿@model IEnumerable<JavaFlorist.Models.Domain.Bouquet_Info>;
 @{
     ViewData["Title"] = "ShopList";
     Layout = "~/Areas/Admin/Views/Shared/_AdLayout.cshtml";
-     var reversedList = Model.BouquetList.OrderByDescending(item => item.bouquet_id).ToList();
+     
 }
 
 <div class="container-fluid">
@@ -13,7 +13,16 @@
             <div class="card w-100">
                 <div class="card-body p-4" style="margin-top:80px;">
                     <h5 class="card-title fw-semibold mb-4">Bouquet List</h5>
-                    <a href="/Admin/Shop/Add" class="btn btn-primary">Add</a>
+                    <div class="d-flex">
+                     <a href="/Admin/Shop/Add" class="btn btn-primary">Add</a>
+                    <form method="get" asp-action="ShopList"  style="padding-left:10px">
+                            <div class="d-flex" style="gap:5px;">
+                               <input type="text" class="form-control" id="searchInput" name="search" value="@ViewBag.SearchTerm" />
+                               <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+
+                    </div>
                     <div class="table-responsive">
                         @if (TempData["msg"] != null)
                             {
@@ -53,7 +62,7 @@
                             </thead>
                             <tbody>
                   
-                                @foreach(var item in reversedList)
+                                @foreach(var item in Model.Reverse())
                                 {
                                     <tr>
                                         <td class="border-bottom-0"><h6 class="fw-semibold mb-0">@item.bouquet_id</h6></td>

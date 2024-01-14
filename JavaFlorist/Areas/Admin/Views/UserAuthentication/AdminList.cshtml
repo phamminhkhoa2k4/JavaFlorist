@@ -14,7 +14,16 @@
             <div class="card w-100">
                 <div class="card-body p-4" style="margin-top:80px;">
                     <h5 class="card-title fw-semibold mb-4">Administrantion Account List</h5>
-                    <a href="/Admin/UserAuthentication/Add" class="btn btn-primary">Add</a>
+                    <div class="d-flex">
+                        <a href="/Admin/UserAuthentication/Add" class="btn btn-primary">Add</a>
+                        <form method="get" action="/Admin/Discount/DiscountList" style="padding-left:10px">
+                            <div class="d-flex" style="gap:5px;">
+                                <input type="text" class="form-control" id="searchInput" name="search" value="@ViewBag.SearchTerm" />
+                                <button type="submit" class="btn btn-primary">Search</button>
+                            </div>
+                        </form>
+
+                    </div>
                     <div class="table-responsive">
                         @if (TempData["msg"] != null)
                         {
