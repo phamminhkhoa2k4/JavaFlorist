@@ -64,12 +64,17 @@ namespace JavaFlorist.Areas.Admin.Controllers
         [Area("Admin")]
         public IActionResult DeleteOrder(int orderId) {
            var result =  _orderService.Delete(orderId);
-            if (result)
+           if (result)
             {
-                return Redirect(Request.Headers["referer"].ToString());
-            }
+                TempData["msg"] = "Deleted Successfully";
+                return RedirectToAction(nameof(OrderList));
 
-            return Redirect(Request.Headers["referer"].ToString());
+            }
+            else
+            {
+                TempData["msg"] = "Error on server side";
+                return RedirectToAction(nameof(OrderList));
+            }
         }
 
 

@@ -27,6 +27,6 @@ namespace JavaFlorist.Repositories.Abstract
 
 
 
-        //Task<Status> ChangePasswordAsync(ChangePasswordModel model, string username);
+        Task<Status> ChangePasswordAsync(ChangePasswordModel model);
     }
 }

@@ -261,7 +261,7 @@
                                 <div class="item">
                                     <div class="testimony-wrap p-4 pb-5">
                                         <div class="user-img mb-5"
-                                             style="background-image: url(/images/person_3.jpg)">
+                                             style="background-image: url(/img/b2.jpg)">
                                             <span class="quote d-flex align-items-center justify-content-center">
                                                 <i class="icon-quote-left"></i>
                                             </span>
@@ -278,7 +278,7 @@
                                 <div class="item">
                                     <div class="testimony-wrap p-4 pb-5">
                                         <div class="user-img mb-5"
-                                             style="background-image: url(/images/person_2.jpg)">
+                                             style="background-image: url(/img/b3.jpg)">
                                             <span class="quote d-flex align-items-center justify-content-center">
                                                 <i class="icon-quote-left"></i>
                                             </span>
@@ -295,7 +295,7 @@
                                 <div class="item">
                                     <div class="testimony-wrap p-4 pb-5">
                                         <div class="user-img mb-5"
-                                             style="background-image: url(/images/person_3.jpg)">
+                                             style="background-image: url(/img/b1.jpg)">
                                             <span class="quote d-flex align-items-center justify-content-center">
                                                 <i class="icon-quote-left"></i>
                                             </span>
@@ -420,7 +420,7 @@
                         <div class="block-23 mb-3">
                             <ul>
                                 <li><span class="icon icon-map-marker"></span><span class="text">Số 1 , Lý Tự Trọng , Ninh Kiều , Cần Thơ, Việt Nam </span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+84 99999 999 99 </span></a></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+84 787998410</span></a></li>
                                 <li><a href="#"><span class="icon icon-envelope"></span>  <span class="text">  pmkhoaa22086@cusc.edu.ctu.vn</span></a></li>
                             </ul>
                         </div>
@@ -431,7 +431,7 @@
                 <div class="col-md-12 text-center">
 
                     <p>
-                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This  is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="#" target="_blank">Wisdom A.K.A Minh Khoa</a>
+                        Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This  is made with <i class="icon-heart color-danger" aria-hidden="true"></i> by <a href="#" target="_blank">Java Florist</a>
                     </p>
                 </div>
             </div>
@@ -482,7 +482,7 @@
                                     </div>
                                     <div id="add-profile" class="col-sm-8" style="display:none">
                                         <div class="card-block">
-                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Addition Information</h6>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <p class="m-b-10 f-w-600">First Name</p>
@@ -577,7 +577,7 @@
                                                     @TempData["msg"]
                                                 </div>
                                             }
-                                            
+                                            <a href="/UserAuthentication/ChangePassword" class="btn btn-info">Change Password</a>
                                             <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600"></h6>
                                         </div>
                                     </div>
@@ -596,22 +596,18 @@
 
     <script>
         $(document).ready(function () {
-            // Gọi hàm khi click vào phần nội dung modal
             $('#myModal').on('click', '.modal-content', function (e) {
-                e.stopPropagation(); // Ngăn chặn sự kiện click từ lan toả lên đến phần tử cha
+                e.stopPropagation(); 
             });
         });
     </script>
 
 
     <script>
-        // Check TempData value and trigger modal if necessary
         document.addEventListener('DOMContentLoaded', function () {
             var shouldOpenModal = @(TempData["power"] != null && TempData["power"].ToString().ToLower() == "true" ? "true" : "false");
 
             if (shouldOpenModal) {
-                // Trigger your modal display code here
-                // For example, if you're using Bootstrap's modal:
                 $('#myModal').modal('show');
             }
         });
@@ -631,7 +627,6 @@
     <script src="~/js/jquery.animateNumber.min.js"></script>
     <script src="~/js/scrollax.min.js"></script>
     <script>
-        // menu
         document.addEventListener('DOMContentLoaded', () => {
             const menuIcon = document.getElementById('menu-icon');
             const dropdownMenu = document.querySelector('.dropdown-menu');
@@ -701,12 +696,9 @@
 
                         @if (TempData.ContainsKey("RegisteredSuccessfully") && (bool)TempData["RegisteredSuccessfully"])
                             {
-                                <h4>Congratulations !</h4>
+                                <h4>Congratulations @username !</h4>
                             }
-                            else
-                            {
-                                <h4>WELCOME TO @username !</h4>
-                            }
+                           
                         
 
                        
@@ -726,11 +718,10 @@
     </div>
     <script>
         $.ajax({
-            url: '/Sample/?id=@id', // Thay '/Sample/GetData' bằng đường dẫn tới action của bạn
-            method: 'GET', // Hoặc 'POST' tùy theo phương thức của action
+            url: '/Sample/?id=@id', 
+            method: 'GET', 
             success: function (data) {
-                // Xử lý dữ liệu ở đây và hiển thị trên trang web
-                console.log(data); // Hiển thị dữ liệu trong console
+                console.log(data); 
             },
             error: function (error) {
                 console.error('Error:', error);
@@ -747,31 +738,24 @@
                 var reader = new FileReader();
 
                 reader.onload = function (e) {
-                    // Set the preview image source to the selected file
                     document.getElementById('preview').src = e.target.result;
                 }
 
-                // Read the selected file as a data URL
                 reader.readAsDataURL(input.files[0]);
             }
         }
 
         function removeImage() {
-            var defaultAvatar = "/img/Avatar-Default.jpg"; // Replace with your default image URL
 
-            // Check if the avatar variable is null or empty
-            var avatar = "@avatar"; // Assuming this is your variable holding the avatar URL
+            var avatar = "@avatar";
             if (!avatar || avatar.trim() === "") {
-                // If the avatar is null or empty, set the preview to the default image
                 document.getElementById('preview').src = defaultAvatar;
             } else {
-                // If the avatar is not null, set the preview to the specified avatar
                 document.getElementById('preview').src ='/Uploads/' + avatar;
             }
 
       
             
-            // Reset the file input field to clear the selected file
             document.getElementById('fileInput').value = null;
         }
     </script>
@@ -782,26 +766,25 @@
                 if (searchText.length >= 1) {
                     $.ajax({
                         type: 'GET',
-                        url: '/Shop/Search', // Điều hướng đến action xử lý tìm kiếm trong Controller
+                        url: '/Shop/Search', 
                         data: { searchTerm: searchText },
                         success: function (response) {
-                            displaySuggestions(response); // Hiển thị gợi ý từ kết quả nhận được
+                            displaySuggestions(response); 
                         },
                         error: function (error) {
                             console.log(error);
                         }
                     });
                 } else {
-                    $('#suggestions').empty(); // Xóa danh sách gợi ý nếu không có dữ liệu nhập
+                    $('#suggestions').empty(); 
                 }
             });
         });
 
         function displaySuggestions(suggestions) {
             var suggestionList = $('#suggestions');
-            suggestionList.empty(); // Xóa danh sách gợi ý cũ trước khi thêm mới
+            suggestionList.empty(); 
 
-            // Hiển thị danh sách gợi ý
             suggestions.slice(0, 5).forEach(function (item) {
                 suggestionList.append('<a href="/Shop/ShopDetail?bouquet_id=' + item.bouquet_id + ' ">' +  '<li class="list-group-item d-flex justify-content-between align-items-start">' +
                     '<div class="ms-2 me-auto">' +
@@ -821,18 +804,16 @@
 
         $('.quantity').on('input', function () {
             var bouquetId = $(this).attr('id').split('_')[1]; 
-            var quantity = $(this).val(); // Lấy giá trị số lượng từ input
+            var quantity = $(this).val(); 
             var cust_id = @id;
 
             $.ajax({
-                url: '/Cart/UpdateCartItemQuantity', // Endpoint cập nhật số lượng
+                url: '/Cart/UpdateCartItemQuantity', 
                 method: 'POST',
                 data: { bouquetId: bouquetId, newQuantity: quantity, cust_id: cust_id },
                 success: function (response) {
-                    // Xử lý kết quả từ server nếu cần
                 },
                 error: function (error) {
-                    // Xử lý lỗi nếu có
                 }
             });
         });
@@ -848,7 +829,6 @@
                 if (quantity <= 0) {
                     const confirmRemove = confirm('Are you sure you want to remove this item from the cart?');
                     if (confirmRemove) {
-                        // Redirect to the RemoveFromCart action
                         window.location.href = `/Cart/RemoveFromCart?bouquetId=${bouquetId}&cust_id=@id`;
                     } else {
                         this.value = 1;
@@ -867,7 +847,7 @@
             let subtotal = 0;
             const items = document.querySelectorAll('.total');
             items.forEach(item => {
-                subtotal += parseFloat(item.innerText.replace('$', '') || 0); // Use `|| 0` to avoid NaN if there's an empty string
+                subtotal += parseFloat(item.innerText.replace('$', '') || 0);
             });
             if (subtotal == 0) {
                 sessionStorage.removeItem('discount');
@@ -887,7 +867,7 @@
         }
        
         document.addEventListener("DOMContentLoaded", function () {
-            setTimeout(updateCartTotals, 500);
+            setTimeout(updateCartTotals, 1000);
             const quantityInputs = document.querySelectorAll('.quantity');
 
             quantityInputs.forEach(input => {
@@ -1103,16 +1083,12 @@
     </script>
     <script>
         $(document).ready(function () {
-            // Function to handle the click event on category linkssxdas
             function handleCategoryClick() {
-                // Remove the 'active' class from all category links
                 $('.category-link').removeClass('active');
 
-                // Add the 'active' class to the clicked category link
                 $(this).addClass('active');
             }
 
-            // Make the AJAX request to fetch category data
             $.ajax({
                 url: '/Shop/listCategory',
                 type: 'GET',
@@ -1121,7 +1097,6 @@
                     var categoryList = $('#categoryList');
                     var dropCategory = $('#dropcategory');
 
-                    // Iterate through the data to create and append category links
                     $.each(data, function (index, item) {
                         var li = $('<li>');
                         var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item).addClass('category-link');
@@ -1129,7 +1104,6 @@
                         categoryList.append(li);
                     });
 
-                    // Duplicate the logic for the dropCategory
                     $.each(data, function (index, item) {
                         var li = $('<li>');
                         var a = $('<a>').attr('href', '/Shop/FilterByCategory?category=' + item).text(item).addClass('category-link');
@@ -1137,7 +1111,6 @@
                         dropCategory.append(li);
                     });
 
-                    // Attach the click event handler to all category links
                     $('.category-link').on('click', handleCategoryClick);
                 },
                 error: function (error) {

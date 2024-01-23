@@ -145,7 +145,7 @@ namespace JavaFlorist.Repositories.Implementation
 
             if (paging)
             {
-                int pageSize = 100 ;
+                int pageSize = 16 ;
                 int count = list.Count;
                 int TotalPages = (int)Math.Ceiling(count / (double)pageSize);
                 list = list.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();

@@ -275,30 +275,30 @@ namespace JavaFlorist.Repositories.Implementation
         {
             return await userManager.Users.ToListAsync();
         }
-        //public async task<status> changepasswordasync(changepasswordmodel model, string username)
-        //{
-        //    var status = new status();
+        public async Task<Status> ChangePasswordAsync(ChangePasswordModel model)
+        {
+            var status = new Status();
 
-        //    var user = await usermanager.findbynameasync(username);
-        //    if (user == null)
-        //    {
-        //        status.message = "user does not exist";
-        //        status.statuscode = 0;
-        //        return status;
-        //    }
-        //    var result = await usermanager.changepasswordasync(user, model.currentpassword, model.newpassword);
-        //    if (result.succeeded)
-        //    {
-        //        status.message = "password has updated successfully";
-        //        status.statuscode = 1;
-        //    }
-        //    else
-        //    {
-        //        status.message = "some error occcured";
-        //        status.statuscode = 0;
-        //    }
-        //    return status;
+            var user = await userManager.FindByNameAsync(model.Username);
+            if (user == null)
+            {
+                status.Message = "user does not exist";
+                status.StatusCode = 0;
+                return status;
+            }
+            var result = await userManager.ChangePasswordAsync(user, model.CurrentPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                status.Message = "password has updated successfully";
+                status.StatusCode = 1;
+            }
+            else
+            {
+                status.Message = "some error occcured";
+                status.StatusCode = 0;
+            }
+            return status;
 
-        //}
+        }
     }
 }

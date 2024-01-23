@@ -24,9 +24,16 @@ namespace JavaFlorist.Areas.Admin.Controllers
         }
         [Area("Admin")]
 
-        public async Task<IActionResult> AdminList()
+        public async Task<IActionResult> AdminList(string search)
         {
             var admins = await authService.GetAllUsersInRole("Admin");
+            if (!string.IsNullOrEmpty(search))
+            {
+                admins = admins.Where(d => d.UserName.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            ViewBag.SearchTerm = search;
+
             return View(admins);
         }
 
@@ -34,7 +41,6 @@ namespace JavaFlorist.Areas.Admin.Controllers
         public async Task<IActionResult> Delete(string userId)
         {
             var isDeleted = await authService.DeleteUser(userId);
-            isDeleted = false;
             if (isDeleted)
             {
                 TempData["msg"] = "Deleted Successfully";

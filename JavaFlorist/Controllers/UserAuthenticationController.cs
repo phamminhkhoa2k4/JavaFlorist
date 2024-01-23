@@ -1,6 +1,7 @@
 ﻿using JavaFlorist.Models.DTO;
 using JavaFlorist.Repositories.Abstract;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Configuration;
 
@@ -117,6 +118,37 @@ namespace JavaFlorist.Controllers
             return Json(count);
         }
 
+
+        [Authorize]
+        public IActionResult ChangePassword()
+        {
+            // Your change password view/page
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(ChangePasswordModel model)
+        {
+            if (model == null)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid data");
+                return View(model);
+            }
+
+            var result = await authService.ChangePasswordAsync(model);
+
+            if (result.StatusCode == 1)
+            {
+                TempData["SuccessMessage"] = result.Message;
+                return Redirect(Request.Headers["referer"].ToString());
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, result.Message);
+                return View(model);
+            }
+        }
     }
 }
 
